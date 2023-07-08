@@ -12,19 +12,15 @@
 set -e
 
 # Change to the root directory of the project
-cd "$(dirname "$(readlink -f "$BASH_SOURCE")")"
+cd "$(dirname "$(readlink -f "$BASH_SOURCE")")/.."
 
 # Header for the AUTHORS file
+# Retrieve author names and emails from Git commit history, sort, and remove duplicates
 {
     cat <<-'EOH'
-        # This file lists all individuals having contributed content to the repository.
-        # For how it is generated, see `scripts/generate-authors.sh`.
-    EOH
+		# This file lists all individuals having contributed content to the repository.
+		# For how it is generated, see `scripts/generate-authors.sh`.
+	EOH
     echo
-} > AUTHORS
-
-# Retrieve author names and emails from Git commit history, sort, and remove duplicates
-# git log --format='%aN <%aE>' | LC_ALL=C.UTF-8 sort -uf >> AUTHORS
-
-# Notify the user that the AUTHORS file has been generated
-# echo "The AUTHORS file has been generated successfully."
+    git log --format='%aN <%aE>' | LC_ALL=C.UTF-8 sort -uf
+} >AUTHORS
