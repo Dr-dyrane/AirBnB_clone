@@ -4,6 +4,17 @@
   <img src="./assets/hbnb.png" alt="HolbertonBnB logo">
 </p>
 
+## Table of Contents
+
+- [Description](#description)
+- [Project Overview](#project-overview)
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- [Testing](#testing)
+- [Contributing](#contributing)
+- [License](#license)
+- [Authors](#authors)
+
 ## Description
 
 AirBnB Clone is a web application developed as part of ALX group project by Ukpono Umoren and Alexander Udeogaranya. It aims to replicate the core functionalities of the popular online lodging marketplace, Airbnb.
@@ -34,21 +45,76 @@ To get started with the AirBnB Clone project, follow these steps:
    python console.py
    ```
 
-## Usage
+## Usage 💻
 
 The AirBnB Clone console provides a command-line interface to manage the objects of the AirBnB project. You can create new objects, retrieve existing objects, perform operations on objects, update attributes, and destroy objects.
 
 Refer to the console commands and syntax documentation for detailed usage instructions.
+
+| Command                                       | Example                                                                                                                                   |
+| --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| Run the console                               | `./console.py`                                                                                                                            |
+| Quit the console                              | `(hbnb) quit`                                                                                                                             |
+| Display the help for a command                | `(hbnb) help <command>`                                                                                                                   |
+| Create an object (prints its id)              | `(hbnb) create <class>`                                                                                                                   |
+| Show an object                                | `(hbnb) show <class> <id>` or `(hbnb) <class>.show(<id>)`                                                                                 |
+| Destroy an object                             | `(hbnb) destroy <class> <id>` or `(hbnb) <class>.destroy(<id>)`                                                                           |
+| Show all objects, or all instances of a class | `(hbnb) all` or `(hbnb) all <class>`                                                                                                      |
+| Update an attribute of an object              | `(hbnb) update <class> <id> <attribute name> "<attribute value>"` or `(hbnb) <class>.update(<id>, <attribute name>, "<attribute value>")` |
+
+### Interactive mode (example)
+
+```bash
+$ ./console.py
+(hbnb) help
+
+Documented commands (type help <topic>):
+========================================
+EOF  help  quit
+
+(hbnb)
+(hbnb)
+(hbnb) quit
+$
+```
+
+### Non-interactive mode (example)
+
+```bash
+$ echo "help" | ./console.py
+(hbnb)
+
+Documented commands (type help <topic>):
+========================================
+EOF  help  quit
+(hbnb)
+$
+$ cat test_help
+help
+$
+$ cat test_help | ./console.py
+(hbnb)
+
+Documented commands (type help <topic>):
+========================================
+EOF  help  quit
+(hbnb)
+$
+```
 
 ## Testing
 
 To run the unit tests for the project, use the following command:
 
 ```
-python -m unittest discover tests/
+python3 -m unittest discover tests/
 ```
 
-Make sure to review the test coverage and ensure that all tests pass successfully.
+Alternatively, you can specify a single test file to run at a time:
+
+```
+$ python3 unittest -m tests/test_console.py
+```
 
 ## Contributing
 
@@ -62,5 +128,5 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Authors
 
-- Ukpono Umoren
-- Alexander Udeogaranya
+- [Ukpono Umoren](https://github.com/Ukeremi)
+- [Alexander Udeogaranya](https://github.com/Dr-dyrane)
