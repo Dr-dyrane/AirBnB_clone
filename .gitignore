@@ -1,0 +1,103 @@
+# ALX HolbertonBnB - AirBnB clone - The console
+#
+###############################################################################
+# This .gitignore file specifies intentionally untracked files that should be
+# ignored when using Git in the ALX HolbertonBnB project. It is based on the
+# official Git documentation and adapted for the specific needs of the project.
+###############################################################################
+
+# Ignore Python bytecode files
+###############################################################################
+# Python compiles source code to bytecode files for performance reasons. These
+# files are created by the Python interpreter and should not be committed to
+# the repository.
+###############################################################################
+
+*.pyc        # Python compiled files
+*.pyo        # Python optimized files
+*.pyd        # Python dynamic files
+__pycache__/ # Python bytecode cache
+
+# Ignore virtual environments
+###############################################################################
+# Virtual environments are typically created to isolate project-specific
+# dependencies. These environments are not part of the project itself and
+# should be ignored.
+###############################################################################
+
+.venv/ # Virtual environment directory
+env/   # Alternative virtual environment directory
+
+# Ignore IDE-specific files
+###############################################################################
+# Integrated development environments (IDEs) generate various files and
+# directories specific to their own configurations. These files are not
+# part of the project and should be ignored.
+###############################################################################
+
+.idea/   # JetBrains IDE
+.vscode/ # Visual Studio Code
+
+# Ignore build and distribution files
+###############################################################################
+# Build and distribution processes generate files and directories that are
+# specific to the build environment. These files can be regenerated and should
+# not be committed.
+###############################################################################
+
+build/      # Build directory
+dist/       # Distribution directory
+*.egg-info/ # Metadata for Python packages
+
+# Ignore log files
+###############################################################################
+# Log files are often generated during the execution of the project. These
+# files contain information that is not essential for version control.
+###############################################################################
+
+*.log # Log files
+
+# Ignore database files
+###############################################################################
+# Database files are created and modified during the execution of the project.
+# These files are specific to the local environment and should not be
+# committed.
+###############################################################################
+
+*.sqlite3 # SQLite database files
+
+# Ignore compiled extensions
+###############################################################################
+# Compiled extensions or shared library files are generated from source code.
+# These files should not be committed as they can be regenerated.
+###############################################################################
+
+*.so # Compiled extensions
+
+# Ignore sensitive or private information
+###############################################################################
+# Files containing sensitive or private information, such as API keys or
+# configuration files with secret data, should not be committed to the
+# repository.
+###############################################################################
+
+*.cfg  # Configuration files
+*.conf # Configuration files
+*.env  # Environment-specific files
+
+# Ignore user-specific files
+###############################################################################
+# User-specific files and directories should not be committed to the repository
+# as they may contain personal settings or configurations.
+###############################################################################
+
+.user/  # User-specific directory
+.cache/ # User-specific cache directory
+
+# Ignore generated documentation
+###############################################################################
+# Documentation generated from source code or other files can be regenerated
+# as needed and should not be committed.
+###############################################################################
+
+docs/_build/ # Documentation build directory
