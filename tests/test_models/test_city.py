@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-"""Unittest module for the City Class.
+"""
+Unittest module for the City Class.
 
 Unittest classes:
     TestBaseModel_instantiation
