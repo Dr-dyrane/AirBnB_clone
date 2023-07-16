@@ -57,7 +57,10 @@ class Storage:
         Returns:
             dict: A dictionary containing the retrieved objects.
         """
-        return self.__engine.all(cls)
+        if cls is None:
+            return self.__engine.all()
+        else:
+            return self.__engine.all(cls)
 
     def new(self, obj):
         """

@@ -28,7 +28,7 @@ Authors: Ukpono Umoren & Alexander Udeogaranya
 import cmd
 import re
 import json
-from models import storage
+from models.storage import Storage
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -42,7 +42,7 @@ class HBNBCommand(cmd.Cmd):
     """
     The HBnB command-line interpreter.
 
-    The HBNBCommand class represents the command-line interpreter for;
+    The HBNBCommand class represents the command-line interpreter for
     the HolbertonBnB application.
     It inherits from the cmd.Cmd class provided by the cmd module,
     which provides a framework for
@@ -139,8 +139,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
 
-        key = "{}.{}".format(class_name, instance_id)
-        instance = storage.get(class_name, instance_id)
+        instance = Storage().all(self.classes[class_name]).get(instance_id)
         if instance is None:
             print("** no instance found **")
             return
@@ -167,14 +166,13 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
 
-        key = "{}.{}".format(class_name, instance_id)
-        instance = storage.get(class_name, instance_id)
+        instance = Storage().all(self.classes[class_name]).get(instance_id)
         if instance is None:
             print("** no instance found **")
             return
 
-        storage.delete(instance)
-        storage.save()
+        Storage().delete(instance)
+        Storage().save()
 
     def do_all(self, arg):
         """
@@ -197,9 +195,9 @@ class HBNBCommand(cmd.Cmd):
 
         instances = []
         if len(args) == 0:
-            instances = storage.all().values()
+            instances = Storage().all().values()
         else:
-            instances = storage.all(args[0]).values()
+            instances = Storage().all(self.classes[args[0]]).values()
 
         print([str(instance) for instance in instances])
 
@@ -226,8 +224,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
 
-        key = "{}.{}".format(class_name, instance_id)
-        instance = storage.get(class_name, instance_id)
+        instance = Storage().all(self.classes[class_name]).get(instance_id)
         if instance is None:
             print("** no instance found **")
             return
@@ -274,7 +271,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
             return
 
-        count = storage.count(class_name)
+        count = len(Storage().all(self.classes[class_name]))
         print(count)
 
     # Helper function to parse attribute values
