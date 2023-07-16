@@ -1,27 +1,20 @@
 #!/usr/bin/python3
 """
 This module defines the HBnB console;
-
 A command-line interface for interacting
 with the HolbertonBnB application.
-
 The console allows users to create, retrieve, update, and delete objects
 in the application's storage system.
-
 It supports various commands for managing different types of objects,
 such as BaseModel, User, State, City, Place, Amenity, and Review.
-
 Usage:
     $ ./console.py
-
 Command examples:
     (hbnb) create BaseModel
     (hbnb) show User 1234-1234-1234
     (hbnb) all
     (hbnb) update Place 9876 name "New Place"
-
 For more information on available commands, type 'help'.
-
 Authors: Ukpono Umoren & Alexander Udeogaranya
 """
 
@@ -41,13 +34,11 @@ from models.review import Review
 class HBNBCommand(cmd.Cmd):
     """
     The HBnB command-line interpreter.
-
     The HBNBCommand class represents the command-line interpreter for
     the HolbertonBnB application.
     It inherits from the cmd.Cmd class provided by the cmd module,
     which provides a framework for
     creating command-line interpreters.
-
     Attributes:
         prompt (str): The command prompt.
         classes (dict): A dictionary of available model classes.
@@ -73,7 +64,6 @@ class HBNBCommand(cmd.Cmd):
     def default(self, line):
         """
         Called when the entered command is not recognized.
-
         Args:
             line (str): The entered command line.
         """
@@ -82,7 +72,6 @@ class HBNBCommand(cmd.Cmd):
     def do_quit(self, arg):
         """
         Quit the console.
-
         Usage: quit | exit
         """
         return True
@@ -90,7 +79,6 @@ class HBNBCommand(cmd.Cmd):
     def do_EOF(self, arg):
         """
         Handle the End-of-File (EOF) signal to exit the console.
-
         Usage: EOF
         """
         print("")  # Print a new line before exiting
@@ -99,9 +87,7 @@ class HBNBCommand(cmd.Cmd):
     def do_create(self, arg):
         """
         Create a new instance of a model class.
-
         Usage: create <class_name>
-
         Example:
             (hbnb) create User
         """
@@ -122,9 +108,7 @@ class HBNBCommand(cmd.Cmd):
     def do_show(self, arg):
         """
         Show the string representation of an instance.
-
         Usage: show <class_name> <instance_id>
-
         Example:
             (hbnb) show User 1234-1234-1234
         """
@@ -148,9 +132,7 @@ class HBNBCommand(cmd.Cmd):
     def do_destroy(self, arg):
         """
         Delete an instance.
-
         Usage: destroy <class_name> <instance_id>
-
         Example:
             (hbnb) destroy User 1234-1234-1234
         """
@@ -175,31 +157,46 @@ class HBNBCommand(cmd.Cmd):
     def do_all(self, arg):
         """
         Retrieve all instances or instances of a specific class.
-
         Usage: all [class_name]
-
         Example:
             (hbnb) all
             (hbnb) all User
         """
         args = arg.split()
+        if len(args) > 0 and args[0] not in self.classes:
+            print("** class doesn't exist **")
+        else:
+            objl = []
+            for obj in Storage().all().values():
+                if len(args) > 0 and args[0] == obj.__class__.__name__:
+                    objl.append(obj.__str__())
+                elif len(args) == 0:
+                    objl.append(obj.__str__())
+            print(objl)
+
+    def do_count(self, arg):
+        """
+        Count the number of instances of a class.
+        Usage: count <class_name>
+        Example:
+            (hbnb) count User
+        """
+        args = arg.split()
         if len(args) == 0:
-            instances = Storage().all().values()
-        elif args[0] not in self.classes:
+            print("** class name missing **")
+            return
+        if args[0] not in self.classes:
             print("** class doesn't exist **")
             return
-        else:
-            instances = Storage().all(self.classes[args[0]]).values()
-        print([str(instance) for instance in instances])
+        count = Storage().count(self.classes[args[0]])
+        print(count)
 
     def do_update(self, arg):
         """
         Update an instance with new attribute values.
-
         Usage:
         update <class_name> <instance_id> <attribute_name> "<attribute_value>"
         update <class_name> <instance_id> <dictionary>
-
         Example:
             (hbnb) update User 1234-1234-1234 first_name "John"
             (hbnb) update User 1234-1234-1234 {"age": 30, "city": "San Francisco"}
@@ -234,51 +231,13 @@ class HBNBCommand(cmd.Cmd):
             return
         instance.save()
 
-    def count(self, class_name):
-        """
-        Count the number of instances of a class.
-
-        Args:
-            class_name (str): The name of the class.
-
-        Returns:
-            int: The number of instances of the class.
-        """
-        count = 0
-        all_instances = Storage().all()
-        for instance in all_instances.values():
-            if instance.__class__.__name__ == class_name:
-                count += 1
-        return count
-
-    def do_count(self, arg):
-        """
-        Count the number of instances of a class.
-
-        Usage: count <class_name>
-
-        Example:
-            (hbnb) count User
-        """
-        args = arg.split()
-        if len(args) == 0:
-            print("** class name missing **")
-            return
-        if args[0] not in self.classes:
-            print("** class doesn't exist **")
-            return
-        count = self.count(args[0])
-        print(count)
-
     # Helper function to parse attribute values
     @staticmethod
     def parse_attribute_value(value):
         """
         Parse the attribute value and convert it to the appropriate data type.
-
         Args:
             value (str): The attribute value as a string.
-
         Returns:
             The parsed attribute value as the appropriate data type.
         """
@@ -287,7 +246,6 @@ class HBNBCommand(cmd.Cmd):
         except json.JSONDecodeError:
             # If JSON decoding fails, return the original string value
             return value
-
         return parsed_value
 
 
