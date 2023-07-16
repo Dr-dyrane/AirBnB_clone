@@ -16,7 +16,7 @@ Usage:
 
 Command examples:
     (hbnb) create BaseModel
-    (hbnb) show User 12345
+    (hbnb) show User 1234-1234-1234
     (hbnb) all
     (hbnb) update Place 9876 name "New Place"
 
@@ -26,6 +26,7 @@ Authors: Ukpono Umoren & Alexander Udeogaranya
 """
 
 import cmd
+import re
 import json
 from models.storage import Storage
 from models.base_model import BaseModel
@@ -125,24 +126,23 @@ class HBNBCommand(cmd.Cmd):
         Usage: show <class_name> <instance_id>
 
         Example:
-            (hbnb) show User 12345
+            (hbnb) show User 1234-1234-1234
         """
         args = arg.split()
-        if len(args) != 2:
-            print("** invalid number of arguments **")
+        if len(args) == 0:
+            print("** class name missing **")
             return
-
-        class_name = args[0]
-        instance_id = args[1]
-        if class_name not in self.classes:
+        if args[0] not in self.classes:
             print("** class doesn't exist **")
             return
-
-        instance = Storage().all(self.classes[class_name]).get(instance_id)
+        if len(args) == 1:
+            print("** instance id missing **")
+            return
+        instance_id = args[1]
+        instance = Storage().get(self.classes[args[0]], instance_id)
         if instance is None:
             print("** no instance found **")
             return
-
         print(instance)
 
     def do_destroy(self, arg):
@@ -152,25 +152,24 @@ class HBNBCommand(cmd.Cmd):
         Usage: destroy <class_name> <instance_id>
 
         Example:
-            (hbnb) destroy User 12345
+            (hbnb) destroy User 1234-1234-1234
         """
         args = arg.split()
-        if len(args) != 2:
-            print("** invalid number of arguments **")
+        if len(args) == 0:
+            print("** class name missing **")
             return
-
-        class_name = args[0]
-        instance_id = args[1]
-        if class_name not in self.classes:
+        if args[0] not in self.classes:
             print("** class doesn't exist **")
             return
-
-        instance = Storage().all(self.classes[class_name]).get(instance_id)
+        if len(args) == 1:
+            print("** instance id missing **")
+            return
+        instance_id = args[1]
+        instance = Storage().get(self.classes[args[0]], instance_id)
         if instance is None:
             print("** no instance found **")
             return
-
-        Storage().delete(instance)
+        instance.delete()
         Storage().save()
 
     def do_all(self, arg):
@@ -184,20 +183,13 @@ class HBNBCommand(cmd.Cmd):
             (hbnb) all User
         """
         args = arg.split()
-        if len(args) > 1:
-            print("** invalid number of arguments **")
-            return
-
-        if len(args) == 1 and args[0] not in self.classes:
-            print("** class doesn't exist **")
-            return
-
-        instances = []
         if len(args) == 0:
             instances = Storage().all().values()
+        elif args[0] not in self.classes:
+            print("** class doesn't exist **")
+            return
         else:
             instances = Storage().all(self.classes[args[0]]).values()
-
         print([str(instance) for instance in instances])
 
     def do_update(self, arg):
@@ -205,51 +197,59 @@ class HBNBCommand(cmd.Cmd):
         Update an instance with new attribute values.
 
         Usage:
-        update <class_name> <instance_id> <attribute_name> <attribute_value>
+        update <class_name> <instance_id> <attribute_name> "<attribute_value>"
         update <class_name> <instance_id> <dictionary>
 
         Example:
-            (hbnb) update User 12345 first_name "John"
-            (hbnb) update User 12345 {"age": 30, "city": "San Francisco"}
+            (hbnb) update User 1234-1234-1234 first_name "John"
+            (hbnb) update User 1234-1234-1234 {"age": 30, "city": "San Francisco"}
         """
         args = arg.split(maxsplit=3)
-        if len(args) < 3:
-            print("** invalid number of arguments **")
+        if len(args) == 0:
+            print("** class name missing **")
             return
-
-        class_name = args[0]
-        instance_id = args[1]
-        if class_name not in self.classes:
+        if args[0] not in self.classes:
             print("** class doesn't exist **")
             return
-
-        instance = Storage().all(self.classes[class_name]).get(instance_id)
+        if len(args) == 1:
+            print("** instance id missing **")
+            return
+        instance_id = args[1]
+        instance = Storage().get(self.classes[args[0]], instance_id)
         if instance is None:
             print("** no instance found **")
             return
-
-        if len(args) == 3:
-            # Update a single attribute
-            attribute_name = args[2]
-            attribute_value = parse_attribute_value(args[3])
-            setattr(instance, attribute_name, attribute_value)
-        elif len(args) == 2 and args[2].startswith("{") and args[2].endswith("}"):
-            # Update multiple attributes using a dictionary
+        if len(args) == 2 and args[2].startswith("{") and args[2].endswith("}"):
             try:
                 attributes = json.loads(args[2].replace("'", "\""))
             except json.JSONDecodeError:
                 print("** invalid dictionary syntax **")
                 return
-
-            for attribute_name, attribute_value in attributes.items():
-                setattr(instance, attribute_name,
-                        parse_attribute_value(attribute_value))
+            for attr, value in attributes.items():
+                setattr(instance, attr, value)
+        elif len(args) >= 3:
+            setattr(instance, args[2], self.parse_attribute_value(args[3]))
         else:
             print("** invalid syntax **")
             return
-
         instance.save()
-        print(instance)
+
+    def count(self, class_name):
+        """
+        Count the number of instances of a class.
+
+        Args:
+            class_name (str): The name of the class.
+
+        Returns:
+            int: The number of instances of the class.
+        """
+        count = 0
+        all_instances = Storage().all()
+        for instance in all_instances.values():
+            if instance.__class__.__name__ == class_name:
+                count += 1
+        return count
 
     def do_count(self, arg):
         """
@@ -261,39 +261,34 @@ class HBNBCommand(cmd.Cmd):
             (hbnb) count User
         """
         args = arg.split()
-        if len(args) != 1:
-            print("** invalid number of arguments **")
+        if len(args) == 0:
+            print("** class name missing **")
             return
-
-        class_name = args[0]
-        if class_name not in self.classes:
+        if args[0] not in self.classes:
             print("** class doesn't exist **")
             return
-
-        count = len(Storage().all(self.classes[class_name]))
+        count = self.count(args[0])
         print(count)
 
-# Helper function to parse attribute values
+    # Helper function to parse attribute values
+    @staticmethod
+    def parse_attribute_value(value):
+        """
+        Parse the attribute value and convert it to the appropriate data type.
 
+        Args:
+            value (str): The attribute value as a string.
 
-@staticmethod
-def parse_attribute_value(value):
-    """
-    Parse the attribute value and convert it to the appropriate data type.
+        Returns:
+            The parsed attribute value as the appropriate data type.
+        """
+        try:
+            parsed_value = json.loads(value)
+        except json.JSONDecodeError:
+            # If JSON decoding fails, return the original string value
+            return value
 
-    Args:
-        value (str): The attribute value as a string.
-
-    Returns:
-        The parsed attribute value as the appropriate data type.
-    """
-    try:
-        parsed_value = json.loads(value)
-    except json.JSONDecodeError:
-        # If JSON decoding fails, return the original string value
-        return value
-
-    return parsed_value
+        return parsed_value
 
 
 # Run the console
