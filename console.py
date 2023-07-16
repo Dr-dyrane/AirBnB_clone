@@ -273,25 +273,27 @@ class HBNBCommand(cmd.Cmd):
         count = len(Storage().all(self.classes[class_name]))
         print(count)
 
-    # Helper function to parse attribute values
-    @staticmethod
-    def parse_attribute_value(value):
-        """
-        Parse the attribute value and convert it to the appropriate data type.
+# Helper function to parse attribute values
 
-        Args:
-            value (str): The attribute value as a string.
 
-        Returns:
-            The parsed attribute value as the appropriate data type.
-        """
-        try:
-            parsed_value = json.loads(value)
-        except json.JSONDecodeError:
-            # If JSON decoding fails, return the original string value
-            return value
+@staticmethod
+def parse_attribute_value(value):
+    """
+    Parse the attribute value and convert it to the appropriate data type.
 
-        return parsed_value
+    Args:
+        value (str): The attribute value as a string.
+
+    Returns:
+        The parsed attribute value as the appropriate data type.
+    """
+    try:
+        parsed_value = json.loads(value)
+    except json.JSONDecodeError:
+        # If JSON decoding fails, return the original string value
+        return value
+
+    return parsed_value
 
 
 # Run the console
