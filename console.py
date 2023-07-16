@@ -83,7 +83,7 @@ class HBNBCommand(cmd.Cmd):
         """
         Quit the console.
 
-        Usage: quit
+        Usage: quit | exit
         """
         return True
 

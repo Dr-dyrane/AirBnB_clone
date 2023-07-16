@@ -13,10 +13,12 @@
 # the repository.
 ###############################################################################
 
-*.pyc        # Python compiled files
-*.pyo        # Python optimized files
-*.pyd        # Python dynamic files
-__pycache__/ # Python bytecode cache
+*.pyc          # Python compiled files
+*.pyo          # Python optimized files
+*.pyd          # Python dynamic files
+*/__pycache__/ # Python bytecode cache
+models/__pycache__/
+models/engine/__pycache__/
 
 # Ignore virtual environments
 ###############################################################################
