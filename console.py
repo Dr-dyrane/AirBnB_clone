@@ -26,7 +26,6 @@ Authors: Ukpono Umoren & Alexander Udeogaranya
 """
 
 import cmd
-import re
 import json
 from models.storage import Storage
 from models.base_model import BaseModel
@@ -275,26 +274,24 @@ class HBNBCommand(cmd.Cmd):
         print(count)
 
     # Helper function to parse attribute values
+    @staticmethod
+    def parse_attribute_value(value):
+        """
+        Parse the attribute value and convert it to the appropriate data type.
 
+        Args:
+            value (str): The attribute value as a string.
 
-@staticmethod
-def parse_attribute_value(value):
-    """
-    Parse the attribute value and convert it to the appropriate data type.
+        Returns:
+            The parsed attribute value as the appropriate data type.
+        """
+        try:
+            parsed_value = json.loads(value)
+        except json.JSONDecodeError:
+            # If JSON decoding fails, return the original string value
+            return value
 
-    Args:
-        value (str): The attribute value as a string.
-
-    Returns:
-        The parsed attribute value as the appropriate data type.
-    """
-    try:
-        parsed_value = json.loads(value)
-    except json.JSONDecodeError:
-        # If JSON decoding fails, return the original string value
-        return value
-
-    return parsed_value
+        return parsed_value
 
 
 # Run the console
