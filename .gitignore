@@ -13,17 +13,14 @@
 # the repository.
 ###############################################################################
 
-*.pyc          # Python compiled files
-*.pyo          # Python optimized files
-*.pyd          # Python dynamic files
-*/__pycache__/ # Python bytecode cache
-models/__pycache__/
-models/engine/__pycache__/
-__pycache__/
-file.json
-tests/__pycache__/
-tests/test_models/__pycache__/
-tests/test_models/test_engine/__pycache__/
+# Python compiled files
+*.pyc
+# Python optimized files
+*.pyo
+# Python dynamic files
+*.pyd
+# Python bytecode cache
+**/__pycache__/
 
 # Ignore virtual environments
 ###############################################################################
@@ -32,8 +29,10 @@ tests/test_models/test_engine/__pycache__/
 # should be ignored.
 ###############################################################################
 
-.venv/ # Virtual environment directory
-env/   # Alternative virtual environment directory
+# Virtual environment directory
+.venv/
+# Alternative virtual environment directory
+env/
 
 # Ignore IDE-specific files
 ###############################################################################
@@ -42,8 +41,10 @@ env/   # Alternative virtual environment directory
 # part of the project and should be ignored.
 ###############################################################################
 
-.idea/   # JetBrains IDE
-.vscode/ # Visual Studio Code
+# JetBrains IDE
+.idea/
+# Visual Studio Code
+.vscode/
 
 # Ignore build and distribution files
 ###############################################################################
@@ -52,9 +53,12 @@ env/   # Alternative virtual environment directory
 # not be committed.
 ###############################################################################
 
-build/      # Build directory
-dist/       # Distribution directory
-*.egg-info/ # Metadata for Python packages
+# Build directory
+build/
+# Distribution directory
+dist/
+# Metadata for Python packages
+*.egg-info/
 
 # Ignore log files
 ###############################################################################
@@ -62,7 +66,8 @@ dist/       # Distribution directory
 # files contain information that is not essential for version control.
 ###############################################################################
 
-*.log # Log files
+# Log files
+*.log
 
 # Ignore database files
 ###############################################################################
@@ -71,7 +76,10 @@ dist/       # Distribution directory
 # committed.
 ###############################################################################
 
-*.sqlite3 # SQLite database files
+# SQLite database files
+*.sqlite3
+# json file storage
+file.json
 
 # Ignore compiled extensions
 ###############################################################################
@@ -79,7 +87,8 @@ dist/       # Distribution directory
 # These files should not be committed as they can be regenerated.
 ###############################################################################
 
-*.so # Compiled extensions
+# Compiled extensions
+*.so
 
 # Ignore sensitive or private information
 ###############################################################################
@@ -88,9 +97,11 @@ dist/       # Distribution directory
 # repository.
 ###############################################################################
 
-*.cfg  # Configuration files
-*.conf # Configuration files
-*.env  # Environment-specific files
+# Configuration files
+*.cfg
+*.conf
+# Environment-specific files
+*.env
 
 # Ignore user-specific files
 ###############################################################################
@@ -98,8 +109,10 @@ dist/       # Distribution directory
 # as they may contain personal settings or configurations.
 ###############################################################################
 
-.user/  # User-specific directory
-.cache/ # User-specific cache directory
+# User-specific directory
+.user/
+# User-specific cache directory
+.cache/
 
 # Ignore generated documentation
 ###############################################################################
@@ -107,4 +120,5 @@ dist/       # Distribution directory
 # as needed and should not be committed.
 ###############################################################################
 
-docs/_build/ # Documentation build directory
+# Documentation build directory
+docs/_build/
