@@ -19,6 +19,11 @@
 */__pycache__/ # Python bytecode cache
 models/__pycache__/
 models/engine/__pycache__/
+__pycache__/
+file.json
+tests/__pycache__/
+tests/test_models/__pycache__/
+tests/test_models/test_engine/__pycache__/
 
 # Ignore virtual environments
 ###############################################################################
