@@ -1,58 +1,125 @@
 #!/usr/bin/python3
-"""Unittest module for the Place Class.
+"""
+ALX HolbertonBnB - Unit Tests for Place
 
-Unittest classes:
-    TestBaseModel_instantiation
-    TestBaseModel_save
-    TestBaseModel_to_dict
+This module contains unit tests for the Place class.
+
+Authors: Ukpono Umoren & Alexander Udeogaranya
 """
 
 import unittest
-from datetime import datetime
-import time
+import datetime
 from models.place import Place
-import re
-import json
-from models.engine.file_storage import FileStorage
-import os
-from models import storage
-from models.base_model import BaseModel
 
 
 class TestPlace(unittest.TestCase):
-
-    """Test Cases for the Place class."""
+    """
+    Test suite for the Place class.
+    """
 
     def setUp(self):
-        """Sets up test methods."""
-        pass
+        """
+        Set up test fixtures.
+        """
+        self.place = Place()
 
     def tearDown(self):
-        """Tears down test methods."""
-        self.resetStorage()
-        pass
+        """
+        Clean up after each test case.
+        """
+        self.place = None
 
-    def resetStorage(self):
-        """Resets FileStorage data."""
-        FileStorage._FileStorage__objects = {}
-        if os.path.isfile(FileStorage._FileStorage__file_path):
-            os.remove(FileStorage._FileStorage__file_path)
+    def test_instance(self):
+        """
+        Test creating an instance of the Place class.
+        """
+        self.assertIsInstance(self.place, Place)
 
-    def test_8_instantiation(self):
-        """Tests instantiation of Place class."""
+    def test_attributes(self):
+        """
+        Test the attributes of the Place class.
+        """
+        self.assertTrue(hasattr(self.place, 'name'))
+        self.assertTrue(hasattr(self.place, 'user_id'))
+        self.assertTrue(hasattr(self.place, 'city_id'))
+        self.assertTrue(hasattr(self.place, 'description'))
+        self.assertTrue(hasattr(self.place, 'number_bathrooms'))
+        self.assertTrue(hasattr(self.place, 'price_by_night'))
+        self.assertTrue(hasattr(self.place, 'number_rooms'))
+        self.assertTrue(hasattr(self.place, 'longitude'))
+        self.assertTrue(hasattr(self.place, 'latitude'))
+        self.assertTrue(hasattr(self.place, 'max_guest'))
+        self.assertTrue(hasattr(self.place, 'amenity_ids'))
 
-        au = Place()
-        self.assertEqual(str(type(au)), "<class 'models.place.Place'>")
-        self.assertIsInstance(au, Place)
-        self.assertTrue(issubclass(type(au), BaseModel))
+    def test_attribute_types(self):
+        """
+        Test the attribute types of the Place class.
+        """
+        self.assertIsInstance(self.place.name, str)
+        self.assertIsInstance(self.place.user_id, str)
+        self.assertIsInstance(self.place.city_id, str)
+        self.assertIsInstance(self.place.description, str)
+        self.assertIsInstance(self.place.number_bathrooms, int)
+        self.assertIsInstance(self.place.price_by_night, int)
+        self.assertIsInstance(self.place.number_rooms, int)
+        self.assertIsInstance(self.place.longitude, float)
+        self.assertIsInstance(self.place.latitude, float)
+        self.assertIsInstance(self.place.max_guest, int)
+        self.assertIsInstance(self.place.amenity_ids, list)
 
-    def test_8_attributes(self):
-        """Tests the attributes of Place class."""
-        attributes = storage.attributes()["Place"]
-        a = Place()
-        for k, v in attributes.items():
-            self.assertTrue(hasattr(a, k))
-            self.assertEqual(type(getattr(a, k, None)), v)
+    def test_save(self):
+        """
+        Test the save() method of the Place class.
+        """
+        old_updated_at = self.place.updated_at
+        self.place.save()
+        new_updated_at = self.place.updated_at
+        self.assertNotEqual(old_updated_at, new_updated_at)
+
+    def test_to_dict(self):
+        """
+        Test the to_dict() method of the Place class.
+        """
+        obj_dict = self.place.to_dict()
+        self.assertIsInstance(obj_dict, dict)
+        self.assertIn('__class__', obj_dict)
+        self.assertIn('id', obj_dict)
+        self.assertIn('created_at', obj_dict)
+        self.assertIn('updated_at', obj_dict)
+        self.assertIn('name', obj_dict)
+        self.assertIn('user_id', obj_dict)
+        self.assertIn('city_id', obj_dict)
+        self.assertIn('description', obj_dict)
+        self.assertIn('number_bathrooms', obj_dict)
+        self.assertIn('price_by_night', obj_dict)
+        self.assertIn('number_rooms', obj_dict)
+        self.assertIn('longitude', obj_dict)
+        self.assertIn('latitude', obj_dict)
+        self.assertIn('max_guest', obj_dict)
+        self.assertIn('amenity_ids', obj_dict)
+
+    def test_str(self):
+        """
+        Test the __str__() method of the Place class.
+        """
+        obj_str = str(self.place)
+        self.assertIsInstance(obj_str, str)
+        self.assertIn('[Place]', obj_str)
+        self.assertIn('id', obj_str)
+        self.assertIn('created_at', obj_str)
+        self.assertIn('updated_at', obj_str)
+        self.assertIn('name', obj_str)
+        self.assertIn('user_id', obj_str)
+        self.assertIn('city_id', obj_str)
+        self.assertIn('description', obj_str)
+        self.assertIn('number_bathrooms', obj_str)
+        self.assertIn('price_by_night', obj_str)
+        self.assertIn('number_rooms', obj_str)
+        self.assertIn('longitude', obj_str)
+        self.assertIn('latitude', obj_str)
+        self.assertIn('max_guest', obj_str)
+        self.assertIn('amenity_ids', obj_str)
+
 
 if __name__ == "__main__":
     unittest.main()

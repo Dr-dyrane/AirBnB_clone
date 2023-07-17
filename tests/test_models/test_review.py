@@ -1,59 +1,93 @@
 #!/usr/bin/python3
 """
-Unittest module for the Review Class.
+ALX HolbertonBnB - Unit Tests for Review
 
-Unittest classes:
-    TestReview_instantiation
-    TestReview_save
-    TestReview_to_dict
+This module contains unit tests for the Review class.
+
+Authors: Ukpono Umoren & Alexander Udeogaranya
 """
 
 import unittest
-from datetime import datetime
-import time
+import datetime
 from models.review import Review
-import re
-import json
-from models.engine.file_storage import FileStorage
-import os
-from models import storage
-from models.base_model import BaseModel
 
 
 class TestReview(unittest.TestCase):
-
-    """Test Cases for the Review class."""
+    """
+    Test suite for the Review class.
+    """
 
     def setUp(self):
-        """Sets up test methods."""
-        pass
+        """
+        Set up test fixtures.
+        """
+        self.review = Review()
 
     def tearDown(self):
-        """Tears down test methods."""
-        self.resetStorage()
-        pass
+        """
+        Clean up after each test case.
+        """
+        self.review = None
 
-    def resetStorage(self):
-        """Resets FileStorage data."""
-        FileStorage._FileStorage__objects = {}
-        if os.path.isfile(FileStorage._FileStorage__file_path):
-            os.remove(FileStorage._FileStorage__file_path)
+    def test_instance(self):
+        """
+        Test creating an instance of the Review class.
+        """
+        self.assertIsInstance(self.review, Review)
 
-    def test_8_instantiation(self):
-        """Tests instantiation of Review class."""
+    def test_attributes(self):
+        """
+        Test the attributes of the Review class.
+        """
+        self.assertTrue(hasattr(self.review, 'place_id'))
+        self.assertTrue(hasattr(self.review, 'user_id'))
+        self.assertTrue(hasattr(self.review, 'text'))
 
-        au = Review()
-        self.assertEqual(str(type(au)), "<class 'models.review.Review'>")
-        self.assertIsInstance(au, Review)
-        self.assertTrue(issubclass(type(au), BaseModel))
+    def test_attribute_types(self):
+        """
+        Test the attribute types of the Review class.
+        """
+        self.assertIsInstance(self.review.place_id, str)
+        self.assertIsInstance(self.review.user_id, str)
+        self.assertIsInstance(self.review.text, str)
 
-    def test_8_attributes(self):
-        """Tests the attributes of Review class."""
-        attributes = storage.attributes()["Review"]
-        a = Review()
-        for k, v in attributes.items():
-            self.assertTrue(hasattr(a, k))
-            self.assertEqual(type(getattr(a, k, None)), v)
+    def test_save(self):
+        """
+        Test the save() method of the Review class.
+        """
+        old_updated_at = self.review.updated_at
+        self.review.save()
+        new_updated_at = self.review.updated_at
+        self.assertNotEqual(old_updated_at, new_updated_at)
+
+    def test_to_dict(self):
+        """
+        Test the to_dict() method of the Review class.
+        """
+        obj_dict = self.review.to_dict()
+        self.assertIsInstance(obj_dict, dict)
+        self.assertIn('__class__', obj_dict)
+        self.assertIn('id', obj_dict)
+        self.assertIn('created_at', obj_dict)
+        self.assertIn('updated_at', obj_dict)
+        self.assertIn('place_id', obj_dict)
+        self.assertIn('user_id', obj_dict)
+        self.assertIn('text', obj_dict)
+
+    def test_str(self):
+        """
+        Test the __str__() method of the Review class.
+        """
+        obj_str = str(self.review)
+        self.assertIsInstance(obj_str, str)
+        self.assertIn('[Review]', obj_str)
+        self.assertIn('id', obj_str)
+        self.assertIn('created_at', obj_str)
+        self.assertIn('updated_at', obj_str)
+        self.assertIn('place_id', obj_str)
+        self.assertIn('user_id', obj_str)
+        self.assertIn('text', obj_str)
+
 
 if __name__ == "__main__":
     unittest.main()

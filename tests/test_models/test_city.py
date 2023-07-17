@@ -1,59 +1,89 @@
 #!/usr/bin/python3
 """
-Unittest module for the City Class.
+ALX HolbertonBnB - Unit Tests for City
 
-Unittest classes:
-    TestBaseModel_instantiation
-    TestBaseModel_save
-    TestBaseModel_to_dict
+This module contains unit tests for the City class.
+
+Authors: Ukpono Umoren & Alexander Udeogaranya
 """
 
 import unittest
-from datetime import datetime
-import time
+import datetime
 from models.city import City
-import re
-import json
-from models.engine.file_storage import FileStorage
-import os
-from models import storage
-from models.base_model import BaseModel
 
 
 class TestCity(unittest.TestCase):
-
-    """Test Cases for the City class."""
+    """
+    Test suite for the City class.
+    """
 
     def setUp(self):
-        """This method set up test."""
-        pass
+        """
+        Set up test fixtures.
+        """
+        self.city = City()
 
     def tearDown(self):
-        """Tears down test methods."""
-        self.resetStorage()
-        pass
+        """
+        Clean up after each test case.
+        """
+        self.city = None
 
-    def resetStorage(self):
-        """Resets FileStorage data."""
-        FileStorage._FileStorage__objects = {}
-        if os.path.isfile(FileStorage._FileStorage__file_path):
-            os.remove(FileStorage._FileStorage__file_path)
+    def test_instance(self):
+        """
+        Test creating an instance of the City class.
+        """
+        self.assertIsInstance(self.city, City)
 
-    def test_8_instantiation(self):
-        """Tests instantiation of City class."""
+    def test_attributes(self):
+        """
+        Test the attributes of the City class.
+        """
+        self.assertTrue(hasattr(self.city, 'state_id'))
+        self.assertTrue(hasattr(self.city, 'name'))
 
-        au = City()
-        self.assertEqual(str(type(au)), "<class 'models.city.City'>")
-        self.assertIsInstance(au, City)
-        self.assertTrue(issubclass(type(au), BaseModel))
+    def test_attribute_types(self):
+        """
+        Test the attribute types of the City class.
+        """
+        self.assertIsInstance(self.city.state_id, str)
+        self.assertIsInstance(self.city.name, str)
 
-    def test_8_attributes(self):
-        """Tests the attributes of City class."""
-        attributes = storage.attributes()["City"]
-        c = City()
-        for k, v in attributes.items():
-            self.assertTrue(hasattr(c, k))
-            self.assertEqual(type(getattr(c, k, None)), v)
+    def test_save(self):
+        """
+        Test the save() method of the City class.
+        """
+        old_updated_at = self.city.updated_at
+        self.city.save()
+        new_updated_at = self.city.updated_at
+        self.assertNotEqual(old_updated_at, new_updated_at)
+
+    def test_to_dict(self):
+        """
+        Test the to_dict() method of the City class.
+        """
+        obj_dict = self.city.to_dict()
+        self.assertIsInstance(obj_dict, dict)
+        self.assertIn('__class__', obj_dict)
+        self.assertIn('id', obj_dict)
+        self.assertIn('created_at', obj_dict)
+        self.assertIn('updated_at', obj_dict)
+        self.assertIn('state_id', obj_dict)
+        self.assertIn('name', obj_dict)
+
+    def test_str(self):
+        """
+        Test the __str__() method of the City class.
+        """
+        obj_str = str(self.city)
+        self.assertIsInstance(obj_str, str)
+        self.assertIn('[City]', obj_str)
+        self.assertIn('id', obj_str)
+        self.assertIn('created_at', obj_str)
+        self.assertIn('updated_at', obj_str)
+        self.assertIn('state_id', obj_str)
+        self.assertIn('name', obj_str)
+
 
 if __name__ == "__main__":
     unittest.main()

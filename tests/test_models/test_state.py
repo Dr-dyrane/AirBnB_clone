@@ -1,59 +1,85 @@
 #!/usr/bin/python3
 """
-Unittest module for the State Class.
+ALX HolbertonBnB - Unit Tests for State
 
-Unittest classes:
-    TestReview_instantiation
-    TestReview_save
-    TestReview_to_dict
+This module contains unit tests for the State class.
+
+Authors: Ukpono Umoren & Alexander Udeogaranya
 """
 
 import unittest
-from datetime import datetime
-import time
+import datetime
 from models.state import State
-import re
-import json
-from models.engine.file_storage import FileStorage
-import os
-from models import storage
-from models.base_model import BaseModel
 
 
 class TestState(unittest.TestCase):
-
-    """Test Cases for the State class."""
+    """
+    Test suite for the State class.
+    """
 
     def setUp(self):
-        """Sets up test methods."""
-        pass
+        """
+        Set up test fixtures.
+        """
+        self.state = State()
 
     def tearDown(self):
-        """Tears down test methods."""
-        self.resetStorage()
-        pass
+        """
+        Clean up after each test case.
+        """
+        self.state = None
 
-    def resetStorage(self):
-        """Resets FileStorage data."""
-        FileStorage._FileStorage__objects = {}
-        if os.path.isfile(FileStorage._FileStorage__file_path):
-            os.remove(FileStorage._FileStorage__file_path)
+    def test_instance(self):
+        """
+        Test creating an instance of the State class.
+        """
+        self.assertIsInstance(self.state, State)
 
-    def test_8_instantiation(self):
-        """Tests instantiation of State class."""
+    def test_attributes(self):
+        """
+        Test the attributes of the State class.
+        """
+        self.assertTrue(hasattr(self.state, 'name'))
 
-        au = State()
-        self.assertEqual(str(type(au)), "<class 'models.state.State'>")
-        self.assertIsInstance(au, State)
-        self.assertTrue(issubclass(type(au), BaseModel))
+    def test_attribute_types(self):
+        """
+        Test the attribute types of the State class.
+        """
+        self.assertIsInstance(self.state.name, str)
 
-    def test_8_attributes(self):
-        """Tests the attributes of State class."""
-        attributes = storage.attributes()["State"]
-        a = State()
-        for k, v in attributes.items():
-            self.assertTrue(hasattr(a, k))
-            self.assertEqual(type(getattr(a, k, None)), v)
+    def test_save(self):
+        """
+        Test the save() method of the State class.
+        """
+        old_updated_at = self.state.updated_at
+        self.state.save()
+        new_updated_at = self.state.updated_at
+        self.assertNotEqual(old_updated_at, new_updated_at)
+
+    def test_to_dict(self):
+        """
+        Test the to_dict() method of the State class.
+        """
+        obj_dict = self.state.to_dict()
+        self.assertIsInstance(obj_dict, dict)
+        self.assertIn('__class__', obj_dict)
+        self.assertIn('id', obj_dict)
+        self.assertIn('created_at', obj_dict)
+        self.assertIn('updated_at', obj_dict)
+        self.assertIn('name', obj_dict)
+
+    def test_str(self):
+        """
+        Test the __str__() method of the State class.
+        """
+        obj_str = str(self.state)
+        self.assertIsInstance(obj_str, str)
+        self.assertIn('[State]', obj_str)
+        self.assertIn('id', obj_str)
+        self.assertIn('created_at', obj_str)
+        self.assertIn('updated_at', obj_str)
+        self.assertIn('name', obj_str)
+
 
 if __name__ == "__main__":
     unittest.main()

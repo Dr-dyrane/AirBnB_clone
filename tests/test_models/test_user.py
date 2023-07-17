@@ -1,59 +1,97 @@
 #!/usr/bin/python3
 """
-Unittest module for the User Class.
+ALX HolbertonBnB - Unit Tests for User
 
-Unittest classes:
-    TestReview_instantiation
-    TestReview_save
-    TestReview_to_dict
+This module contains unit tests for the User class.
+
+Authors: Ukpono Umoren & Alexander Udeogaranya
 """
 
 import unittest
-from datetime import datetime
-import time
+import datetime
 from models.user import User
-import re
-import json
-from models.engine.file_storage import FileStorage
-import os
-from models import storage
-from models.base_model import BaseModel
 
 
 class TestUser(unittest.TestCase):
-
-    """Test Cases for the User class."""
+    """
+    Test suite for the User class.
+    """
 
     def setUp(self):
-        """Sets up test methods."""
-        pass
+        """
+        Set up test fixtures.
+        """
+        self.user = User()
 
     def tearDown(self):
-        """Tears down test methods."""
-        self.resetStorage()
-        pass
+        """
+        Clean up after each test case.
+        """
+        self.user = None
 
-    def resetStorage(self):
-        """Resets FileStorage data."""
-        FileStorage._FileStorage__objects = {}
-        if os.path.isfile(FileStorage._FileStorage__file_path):
-            os.remove(FileStorage._FileStorage__file_path)
+    def test_instance(self):
+        """
+        Test creating an instance of the User class.
+        """
+        self.assertIsInstance(self.user, User)
 
-    def test_8_instantiation(self):
-        """Tests instantiation of User class."""
+    def test_attributes(self):
+        """
+        Test the attributes of the User class.
+        """
+        self.assertTrue(hasattr(self.user, 'email'))
+        self.assertTrue(hasattr(self.user, 'password'))
+        self.assertTrue(hasattr(self.user, 'first_name'))
+        self.assertTrue(hasattr(self.user, 'last_name'))
 
-        au = User()
-        self.assertEqual(str(type(au)), "<class 'models.user.User'>")
-        self.assertIsInstance(au, User)
-        self.assertTrue(issubclass(type(au), BaseModel))
+    def test_attribute_types(self):
+        """
+        Test the attribute types of the User class.
+        """
+        self.assertIsInstance(self.user.email, str)
+        self.assertIsInstance(self.user.password, str)
+        self.assertIsInstance(self.user.first_name, str)
+        self.assertIsInstance(self.user.last_name, str)
 
-    def test_8_attributes(self):
-        """Tests the attributes of User class."""
-        attributes = storage.attributes()["User"]
-        a = User()
-        for k, v in attributes.items():
-            self.assertTrue(hasattr(a, k))
-            self.assertEqual(type(getattr(a, k, None)), v)
+    def test_save(self):
+        """
+        Test the save() method of the User class.
+        """
+        old_updated_at = self.user.updated_at
+        self.user.save()
+        new_updated_at = self.user.updated_at
+        self.assertNotEqual(old_updated_at, new_updated_at)
+
+    def test_to_dict(self):
+        """
+        Test the to_dict() method of the User class.
+        """
+        obj_dict = self.user.to_dict()
+        self.assertIsInstance(obj_dict, dict)
+        self.assertIn('__class__', obj_dict)
+        self.assertIn('id', obj_dict)
+        self.assertIn('created_at', obj_dict)
+        self.assertIn('updated_at', obj_dict)
+        self.assertIn('email', obj_dict)
+        self.assertIn('password', obj_dict)
+        self.assertIn('first_name', obj_dict)
+        self.assertIn('last_name', obj_dict)
+
+    def test_str(self):
+        """
+        Test the __str__() method of the User class.
+        """
+        obj_str = str(self.user)
+        self.assertIsInstance(obj_str, str)
+        self.assertIn('[User]', obj_str)
+        self.assertIn('id', obj_str)
+        self.assertIn('created_at', obj_str)
+        self.assertIn('updated_at', obj_str)
+        self.assertIn('email', obj_str)
+        self.assertIn('password', obj_str)
+        self.assertIn('first_name', obj_str)
+        self.assertIn('last_name', obj_str)
+
 
 if __name__ == "__main__":
     unittest.main()
