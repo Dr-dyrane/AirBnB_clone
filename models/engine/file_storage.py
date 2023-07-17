@@ -51,7 +51,6 @@ import os
 
 
 class FileStorage:
-
     """
     The FileStorage class handles the serialization and
     deserialization of objects
@@ -126,13 +125,15 @@ class FileStorage:
         from models.place import Place
         from models.review import Review
 
-        classes = {"BaseModel": BaseModel,
-                   "User": User,
-                   "State": State,
-                   "City": City,
-                   "Amenity": Amenity,
-                   "Place": Place,
-                   "Review": Review}
+        classes = {
+            "BaseModel": BaseModel,
+            "User": User,
+            "State": State,
+            "City": City,
+            "Amenity": Amenity,
+            "Place": Place,
+            "Review": Review
+        }
         return classes
 
     def attributes(self, cls_name):
@@ -181,10 +182,3 @@ class FileStorage:
             }
         }
         return attributes[cls_name]
-
-
-if __name__ == "__main__":
-    storage = FileStorage()
-    storage.reload()
-    objects = storage.all()
-    print(objects)
