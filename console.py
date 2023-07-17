@@ -21,7 +21,6 @@ Authors: Ukpono Umoren & Alexander Udeogaranya
 import cmd
 import re
 import json
-from models.storage import Storage
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -29,6 +28,7 @@ from models.city import City
 from models.place import Place
 from models.amenity import Amenity
 from models.review import Review
+from models.engine.file_storage import FileStorage
 
 
 class HBNBCommand(cmd.Cmd):
@@ -102,7 +102,8 @@ class HBNBCommand(cmd.Cmd):
             return
 
         new_instance = self.classes[class_name]()
-        new_instance.save()
+        FileStorage().new(new_instance)
+        FileStorage().save()
         print(new_instance.id)
 
     def do_show(self, arg):
@@ -123,7 +124,7 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
             return
         instance_id = args[1]
-        instance = Storage().get(self.classes[args[0]], instance_id)
+        instance = FileStorage().get(self.classes[args[0]], instance_id)
         if instance is None:
             print("** no instance found **")
             return
@@ -147,12 +148,12 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
             return
         instance_id = args[1]
-        instance = Storage().get(self.classes[args[0]], instance_id)
+        instance = FileStorage().get(self.classes[args[0]], instance_id)
         if instance is None:
             print("** no instance found **")
             return
-        instance.delete()
-        Storage().save()
+        FileStorage().delete(instance)
+        FileStorage().save()
 
     def do_all(self, arg):
         """
@@ -166,13 +167,14 @@ class HBNBCommand(cmd.Cmd):
         if len(args) > 0 and args[0] not in self.classes:
             print("** class doesn't exist **")
         else:
-            objl = []
-            for obj in Storage().all().values():
+            obj_list = []
+            objects = FileStorage().all()
+            for obj in objects.values():
                 if len(args) > 0 and args[0] == obj.__class__.__name__:
-                    objl.append(obj.__str__())
+                    obj_list.append(str(obj))
                 elif len(args) == 0:
-                    objl.append(obj.__str__())
-            print(objl)
+                    obj_list.append(str(obj))
+            print(obj_list)
 
     def do_count(self, arg):
         """
@@ -188,7 +190,7 @@ class HBNBCommand(cmd.Cmd):
         if args[0] not in self.classes:
             print("** class doesn't exist **")
             return
-        count = Storage().count(self.classes[args[0]])
+        count = FileStorage().count(self.classes[args[0]])
         print(count)
 
     def do_update(self, arg):
@@ -201,35 +203,35 @@ class HBNBCommand(cmd.Cmd):
         (hbnb) update User 1234-1234-1234 first_name "John"
         (hbnb) update User 1234-1234-1234 {"age": 30, "city": "San Francisco"}
         """
-        ags = arg.split(maxsplit=3)
-        if len(ags) == 0:
+        args = arg.split(maxsplit=3)
+        if len(args) == 0:
             print("** class name missing **")
             return
-        if ags[0] not in self.classes:
+        if args[0] not in self.classes:
             print("** class doesn't exist **")
             return
-        if len(ags) == 1:
+        if len(args) == 1:
             print("** instance id missing **")
             return
-        instance_id = ags[1]
-        instance = Storage().get(self.classes[ags[0]], instance_id)
+        instance_id = args[1]
+        instance = FileStorage().get(self.classes[args[0]], instance_id)
         if instance is None:
             print("** no instance found **")
             return
-        if len(ags) == 2 and ags[2].startswith("{") and ags[2].endswith("}"):
+        if len(args) == 2 and args[2].startswith("{") and args[2].endswith("}"):
             try:
-                attributes = json.loads(ags[2].replace("'", "\""))
+                attributes = json.loads(args[2].replace("'", "\""))
             except json.JSONDecodeError:
                 print("** invalid dictionary syntax **")
                 return
             for attr, value in attributes.items():
                 setattr(instance, attr, value)
-        elif len(ags) >= 3:
-            setattr(instance, ags[2], self.parse_attribute_value(ags[3]))
+        elif len(args) >= 3:
+            setattr(instance, args[2], self.parse_attribute_value(args[3]))
         else:
             print("** invalid syntax **")
             return
-        instance.save()
+        FileStorage().save()
 
     # Helper function to parse attribute values
     @staticmethod
