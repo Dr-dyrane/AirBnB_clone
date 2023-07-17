@@ -52,7 +52,8 @@ class TestConsole(unittest.TestCase):
             output = f.getvalue().strip()
             self.assertIn("Documented commands (type help <topic>):", output)
             self.assertIn(
-                "EOF  all  count  create  destroy  help  quit  show  update", output)
+                "EOF  all  count  create  destroy  help  quit  show  update",
+                output)
 
     def test_create(self):
         """
