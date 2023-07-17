@@ -2,19 +2,23 @@
 """
 ALX HolbertonBnB - File Storage
 
-This module defines the FileStorage class, which handles the serialization and deserialization
-of objects to and from JSON format. It manages the storage of objects in a file-based database.
+This module defines the FileStorage class, which handles
+the serialization and deserialization
+of objects to and from JSON format. It manages the storage of objects
+in a file-based database.
 
 Attributes:
     __file_path (str): The path to the JSON file where objects are stored.
-    __objects (dict): A dictionary containing all loaded objects, with their class name and ID as keys.
+    __objects (dict): A dictionary containing all loaded objects,
+    with their class name and ID as keys.
 
 Methods:
     all(self, cls=None): Retrieves all objects or objects of a specific class.
     new(self, obj): Adds a new object to the storage.
     save(self): Saves all objects to the JSON file.
     reload(self): Loads objects from the JSON file.
-    attributes(self, cls_name): Returns the valid attributes and their types for a given class name.
+    attributes(self, cls_name): Returns the valid attributes and their
+    types for a given class name.
 
 Usage:
     # Creating a new instance of FileStorage
@@ -49,12 +53,15 @@ import os
 class FileStorage:
 
     """
-    The FileStorage class handles the serialization and deserialization of objects
-    to and from JSON format. It manages the storage of objects in a file-based database.
+    The FileStorage class handles the serialization and
+    deserialization of objects
+    to and from JSON format. It manages the storage of objects
+    in a file-based database.
 
     Attributes:
         __file_path (str): The path to the JSON file where objects are stored.
-        __objects (dict): A dictionary containing all loaded objects, with their class name and ID as keys.
+        __objects (dict): A dictionary containing all loaded objects,
+        with their class name and ID as keys.
     """
 
     __file_path = "file.json"
@@ -65,7 +72,8 @@ class FileStorage:
         Retrieves all objects or objects of a specific class.
 
         Args:
-            cls (class): The class of objects to retrieve. If None, retrieves all objects.
+            cls (class): The class of objects to retrieve.
+            If None, retrieves all objects.
 
         Returns:
             dict: A dictionary containing the retrieved objects.
@@ -80,18 +88,24 @@ class FileStorage:
             return filtered_objects
 
     def new(self, obj):
-        """Sets new obj in __objects dictionary."""
+        """
+        Sets new obj in __objects dictionary.
+        """
         key = "{}.{}".format(type(obj).__name__, obj.id)
         self.__objects[key] = obj
 
     def save(self):
-        """Serializes __objects to JSON file."""
+        """
+        Serializes __objects to JSON file.
+        """
         with open(self.__file_path, "w", encoding="utf-8") as f:
             d = {k: v.to_dict() for k, v in self.__objects.items()}
             json.dump(d, f)
 
     def reload(self):
-        """Deserializes JSON file into __objects."""
+        """
+        Deserializes JSON file into __objects.
+        """
         if not os.path.isfile(self.__file_path):
             return
         with open(self.__file_path, "r", encoding="utf-8") as f:
@@ -101,7 +115,9 @@ class FileStorage:
             self.__objects = obj_dict
 
     def classes(self):
-        """Returns a dictionary of valid classes and their references."""
+        """
+        Returns a dictionary of valid classes and their references.
+        """
         from models.base_model import BaseModel
         from models.user import User
         from models.state import State
@@ -120,7 +136,9 @@ class FileStorage:
         return classes
 
     def attributes(self, cls_name):
-        """Returns the valid attributes and their types for a given class name."""
+        """
+        Returns the valid attributes and their types for a given class name.
+        """
         attributes = {
             "BaseModel": {
                 "id": str,
