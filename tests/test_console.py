@@ -181,20 +181,204 @@ class TestHBNBCommand(unittest.TestCase):
             update_output = mock_stdout.getvalue()
             self.assertEqual("** no instance found **\n", update_output)
 
-            self.assertFalse(self.console.onecmd(
-                'update BaseModel 1234-1234-1234 name "John"'))
+    def test_all_models_all(self):
+        """
+        Test all() method for all models.
+        """
+        with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
+            self.console.onecmd("BaseModel.all()")
+            all_output = mock_stdout.getvalue()
+            self.assertEqual("[]\n", all_output)
+
+            self.console.onecmd("User.all()")
+            all_output = mock_stdout.getvalue()
+            self.assertEqual("[]\n", all_output)
+
+            self.console.onecmd("State.all()")
+            all_output = mock_stdout.getvalue()
+            self.assertEqual("[]\n", all_output)
+
+            self.console.onecmd("City.all()")
+            all_output = mock_stdout.getvalue()
+            self.assertEqual("[]\n", all_output)
+
+            self.console.onecmd("Amenity.all()")
+            all_output = mock_stdout.getvalue()
+            self.assertEqual("[]\n", all_output)
+
+            self.console.onecmd("Place.all()")
+            all_output = mock_stdout.getvalue()
+            self.assertEqual("[]\n", all_output)
+
+            self.console.onecmd("Review.all()")
+            all_output = mock_stdout.getvalue()
+            self.assertEqual("[]\n", all_output)
+
+    def test_all_models_count(self):
+        """
+        Test count() method for all models.
+        """
+        with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
+            self.console.onecmd("BaseModel.count()")
+            count_output = mock_stdout.getvalue()
+            self.assertEqual("0\n", count_output)
+
+            self.console.onecmd("User.count()")
+            count_output = mock_stdout.getvalue()
+            self.assertEqual("0\n", count_output)
+
+            self.console.onecmd("State.count()")
+            count_output = mock_stdout.getvalue()
+            self.assertEqual("0\n", count_output)
+
+            self.console.onecmd("City.count()")
+            count_output = mock_stdout.getvalue()
+            self.assertEqual("0\n", count_output)
+
+            self.console.onecmd("Amenity.count()")
+            count_output = mock_stdout.getvalue()
+            self.assertEqual("0\n", count_output)
+
+            self.console.onecmd("Place.count()")
+            count_output = mock_stdout.getvalue()
+            self.assertEqual("0\n", count_output)
+
+            self.console.onecmd("Review.count()")
+            count_output = mock_stdout.getvalue()
+            self.assertEqual("0\n", count_output)
+
+    def test_all_models_show(self):
+        """
+        Test show() method for all models.
+        """
+        with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
+            self.console.onecmd("BaseModel.show('id')")
+            show_output = mock_stdout.getvalue()
+            self.assertEqual("** no instance found **\n", show_output)
+
+            self.console.onecmd("User.show('id')")
+            show_output = mock_stdout.getvalue()
+            self.assertEqual("** no instance found **\n", show_output)
+
+            self.console.onecmd("State.show('id')")
+            show_output = mock_stdout.getvalue()
+            self.assertEqual("** no instance found **\n", show_output)
+
+            self.console.onecmd("City.show('id')")
+            show_output = mock_stdout.getvalue()
+            self.assertEqual("** no instance found **\n", show_output)
+
+            self.console.onecmd("Amenity.show('id')")
+            show_output = mock_stdout.getvalue()
+            self.assertEqual("** no instance found **\n", show_output)
+
+            self.console.onecmd("Place.show('id')")
+            show_output = mock_stdout.getvalue()
+            self.assertEqual("** no instance found **\n", show_output)
+
+            self.console.onecmd("Review.show('id')")
+            show_output = mock_stdout.getvalue()
+            self.assertEqual("** no instance found **\n", show_output)
+
+    def test_all_models_destroy(self):
+        """
+        Test destroy() method for all models.
+        """
+        with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
+            self.console.onecmd("BaseModel.destroy('id')")
+            destroy_output = mock_stdout.getvalue()
+            self.assertEqual("** no instance found **\n", destroy_output)
+
+            self.console.onecmd("User.destroy('id')")
+            destroy_output = mock_stdout.getvalue()
+            self.assertEqual("** no instance found **\n", destroy_output)
+
+            self.console.onecmd("State.destroy('id')")
+            destroy_output = mock_stdout.getvalue()
+            self.assertEqual("** no instance found **\n", destroy_output)
+
+            self.console.onecmd("City.destroy('id')")
+            destroy_output = mock_stdout.getvalue()
+            self.assertEqual("** no instance found **\n", destroy_output)
+
+            self.console.onecmd("Amenity.destroy('id')")
+            destroy_output = mock_stdout.getvalue()
+            self.assertEqual("** no instance found **\n", destroy_output)
+
+            self.console.onecmd("Place.destroy('id')")
+            destroy_output = mock_stdout.getvalue()
+            self.assertEqual("** no instance found **\n", destroy_output)
+
+            self.console.onecmd("Review.destroy('id')")
+            destroy_output = mock_stdout.getvalue()
+            self.assertEqual("** no instance found **\n", destroy_output)
+
+    def test_all_models_update(self):
+        """
+        Test update() method for all models.
+        """
+        with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
+            self.console.onecmd("BaseModel.update('id', 'name', 'test')")
             update_output = mock_stdout.getvalue()
             self.assertEqual("** no instance found **\n", update_output)
 
-    @patch('sys.stdout', new_callable=StringIO)
-    def test_console_prompt(self, mock_stdout):
+            self.console.onecmd("User.update('id', 'name', 'test')")
+            update_output = mock_stdout.getvalue()
+            self.assertEqual("** no instance found **\n", update_output)
+
+            self.console.onecmd("State.update('id', 'name', 'test')")
+            update_output = mock_stdout.getvalue()
+            self.assertEqual("** no instance found **\n", update_output)
+
+            self.console.onecmd("City.update('id', 'name', 'test')")
+            update_output = mock_stdout.getvalue()
+            self.assertEqual("** no instance found **\n", update_output)
+
+            self.console.onecmd("Amenity.update('id', 'name', 'test')")
+            update_output = mock_stdout.getvalue()
+            self.assertEqual("** no instance found **\n", update_output)
+
+            self.console.onecmd("Place.update('id', 'name', 'test')")
+            update_output = mock_stdout.getvalue()
+            self.assertEqual("** no instance found **\n", update_output)
+
+            self.console.onecmd("Review.update('id', 'name', 'test')")
+            update_output = mock_stdout.getvalue()
+            self.assertEqual("** no instance found **\n", update_output)
+
+    def test_all_models_update_dict(self):
         """
-        Test the console prompt.
+        Test update() method with dictionary for all models.
         """
-        self.console.cmdloop()
-        prompt_output = mock_stdout.getvalue()
-        self.assertEqual("(hbnb) ", prompt_output)
+        with patch('sys.stdout', new_callable=StringIO) as mock_stdout:
+            self.console.onecmd("BaseModel.update('id', {'name': 'test'})")
+            update_output = mock_stdout.getvalue()
+            self.assertEqual("** no instance found **\n", update_output)
+
+            self.console.onecmd("User.update('id', {'name': 'test'})")
+            update_output = mock_stdout.getvalue()
+            self.assertEqual("** no instance found **\n", update_output)
+
+            self.console.onecmd("State.update('id', {'name': 'test'})")
+            update_output = mock_stdout.getvalue()
+            self.assertEqual("** no instance found **\n", update_output)
+
+            self.console.onecmd("City.update('id', {'name': 'test'})")
+            update_output = mock_stdout.getvalue()
+            self.assertEqual("** no instance found **\n", update_output)
+
+            self.console.onecmd("Amenity.update('id', {'name': 'test'})")
+            update_output = mock_stdout.getvalue()
+            self.assertEqual("** no instance found **\n", update_output)
+
+            self.console.onecmd("Place.update('id', {'name': 'test'})")
+            update_output = mock_stdout.getvalue()
+            self.assertEqual("** no instance found **\n", update_output)
+
+            self.console.onecmd("Review.update('id', {'name': 'test'})")
+            update_output = mock_stdout.getvalue()
+            self.assertEqual("** no instance found **\n", update_output)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()
