@@ -2,7 +2,8 @@
 """
 ALX HolbertonBnB - Review
 
-This module defines the Review class, which represents a review in the HolbertonBnB application.
+This module defines the Review class, which represents a review in
+the HolbertonBnB application.
 
 Attributes:
     place_id (str): The ID of the place associated with the review.

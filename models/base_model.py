@@ -3,8 +3,8 @@
 ALX HolbertonBnB - Base Model
 
 This module defines the BaseModel class, which serves as the base model for all
-other classes in the HolbertonBnB application. It provides common attributes and
-methods that are inherited by other classes.
+other classes in the HolbertonBnB application. It provides common attributes
+and methods that are inherited by other classes.
 
 Attributes:
     id (str): The unique identifier of the instance.
@@ -16,7 +16,7 @@ Methods:
     __str__(self): Returns a string representation of the instance.
     save(self): Updates the `updated_at` attribute with the current datetime.
     to_dict(self): Returns a dictionary representation of the instance.
-    
+
 Usage:
     # Creating a new instance
     new_instance = BaseModel()
@@ -44,7 +44,8 @@ from models import storage
 
 class BaseModel:
     """
-    The BaseModel class serves as the base model for all other classes in the HolbertonBnB application.
+    The BaseModel class serves as the base model for all other classes
+    in the HolbertonBnB application.
 
     Attributes:
         id (str): The unique identifier of the instance.
@@ -85,7 +86,8 @@ class BaseModel:
             str: The string representation of the instance.
         """
 
-        return "[{}] ({}) {}".format(type(self).__name__, self.id, self.__dict__)
+        return "[{}] ({}) {}".format(type(self).__name__,
+                                     self.id, self.__dict__)
 
     def save(self):
         """

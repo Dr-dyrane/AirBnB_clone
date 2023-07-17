@@ -2,7 +2,8 @@
 """
 ALX HolbertonBnB - User
 
-This module defines the User class, which represents a user in the HolbertonBnB application.
+This module defines the User class, which represents a user
+in the HolbertonBnB application.
 
 Attributes:
     email (str): The email address of the user.

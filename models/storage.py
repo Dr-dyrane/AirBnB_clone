@@ -2,7 +2,8 @@
 ALX HolbertonBnB - Storage Module
 
 This module provides a high-level interface for managing the storage system.
-It delegates the actual storage operations to the FileStorage class in the models.engine.file_storage module.
+It delegates the actual storage operations to the FileStorage class in 
+the models.engine.file_storage module.
 
 Attributes:
     __engine (FileStorage): The storage engine instance.
@@ -41,7 +42,8 @@ from models.engine.file_storage import FileStorage
 
 class Storage:
     """
-    The Storage class provides a high-level interface for managing the storage system.
+    The Storage class provides a high-level interface for managing
+    the storage system.
     It delegates the actual storage operations to the FileStorage class.
     """
 
@@ -52,7 +54,8 @@ class Storage:
         Retrieves all objects or objects of a specific class.
 
         Args:
-            cls (class): The class of objects to retrieve. If None, retrieves all objects.
+            cls (class): The class of objects to retrieve. If None,
+            retrieves all objects.
 
         Returns:
             dict: A dictionary containing the retrieved objects.

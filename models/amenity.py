@@ -2,7 +2,8 @@
 """
 ALX HolbertonBnB - Amenity
 
-This module defines the Amenity class, which represents an amenity provided by a place/house.
+This module defines the Amenity class, which represents
+an amenity provided by a place/house.
 
 Attributes:
     name (str): The name of the amenity.

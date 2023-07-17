@@ -2,7 +2,8 @@
 """
 ALX HolbertonBnB - State
 
-This module defines the State class, which represents a state in the HolbertonBnB application.
+This module defines the State class, which represents a state in
+the HolbertonBnB application.
 
 Attributes:
     name (str): The name of the state.

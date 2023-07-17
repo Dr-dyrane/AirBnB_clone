@@ -2,7 +2,8 @@
 """
 ALX HolbertonBnB - Place
 
-This module defines the Place class, which represents a place in the HolbertonBnB application.
+This module defines the Place class, which represents a place in
+the HolbertonBnB application.
 
 Attributes:
     name (str): The name of the place.
@@ -67,7 +68,8 @@ class Place(BaseModel):
         number_rooms (int): The number of rooms in the place.
         longitude (float): The longitude coordinate of the place's location.
         latitude (float): The latitude coordinate of the place's location.
-        max_guest (int): The maximum number of guests the place can accommodate.
+        max_guest (int): The maximum number of guests
+        the place can accommodate.
         amenity_ids (list): A list of amenity IDs associated with the place.
     """
 

@@ -2,7 +2,8 @@
 """
 ALX HolbertonBnB - City
 
-This module defines the City class, which represents a city in the HolbertonBnB application.
+This module defines the City class, which represents a city in
+the HolbertonBnB application.
 
 Attributes:
     state_id (str): The ID of the state to which the city belongs.
