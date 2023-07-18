@@ -28,7 +28,7 @@ from models.city import City
 from models.place import Place
 from models.amenity import Amenity
 from models.review import Review
-from models.engine.file_storage import FileStorage
+from models import storage
 
 
 class HBNBCommand(cmd.Cmd):
@@ -102,8 +102,8 @@ class HBNBCommand(cmd.Cmd):
             return
 
         new_instance = self.classes[class_name]()
-        FileStorage().new(new_instance)
-        FileStorage().save()
+        storage.new(new_instance)
+        storage.save()
         print(new_instance.id)
 
     def do_show(self, arg):
@@ -124,7 +124,7 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
             return
         instance_id = args[1]
-        instance = FileStorage().get(self.classes[args[0]], instance_id)
+        instance = storage.get(self.classes[args[0]], instance_id)
         if instance is None:
             print("** no instance found **")
             return
@@ -148,12 +148,12 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
             return
         instance_id = args[1]
-        instance = FileStorage().get(self.classes[args[0]], instance_id)
+        instance = storage.get(self.classes[args[0]], instance_id)
         if instance is None:
             print("** no instance found **")
             return
-        FileStorage().delete(instance)
-        FileStorage().save()
+        storage.delete(instance)
+        storage.save()
 
     def do_all(self, arg):
         """
@@ -168,7 +168,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
         else:
             obj_list = []
-            objects = FileStorage().all()
+            objects = storage.all()
             for obj in objects.values():
                 if len(args) > 0 and args[0] == obj.__class__.__name__:
                     obj_list.append(str(obj))
@@ -190,7 +190,7 @@ class HBNBCommand(cmd.Cmd):
         if args[0] not in self.classes:
             print("** class doesn't exist **")
             return
-        count = FileStorage().count(self.classes[args[0]])
+        count = storage.count(self.classes[args[0]])
         print(count)
 
     def do_update(self, arg):
@@ -214,7 +214,7 @@ class HBNBCommand(cmd.Cmd):
             print("** instance id missing **")
             return
         instance_id = args[1]
-        instance = FileStorage().get(self.classes[args[0]], instance_id)
+        instance = storage.get(self.classes[args[0]], instance_id)
         if instance is None:
             print("** no instance found **")
             return
@@ -231,7 +231,7 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** invalid syntax **")
             return
-        FileStorage().save()
+        storage.save()
 
     # Helper function to parse attribute values
 
