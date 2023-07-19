@@ -113,6 +113,14 @@ class FileStorage:
                         for k, v in obj_dict.items()}
             self.__objects = obj_dict
 
+            # Update missing objects in the storage
+            for obj in self.__objects.values():
+                obj_class = type(obj).__name__
+                obj_id = obj.id
+                obj_key = "{}.{}".format(obj_class, obj_id)
+                if obj_key not in self.__objects:
+                    self.__objects[obj_key] = obj
+
     def classes(self):
         """
         Returns a dictionary of valid classes and their references.
