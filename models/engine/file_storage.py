@@ -190,3 +190,17 @@ class FileStorage:
             }
         }
         return attributes[cls_name]
+
+    def get(self, cls, id):
+        """
+        Retrieves an object by class and ID.
+
+        Args:
+            cls (class): The class of the object.
+            id (str): The ID of the object.
+
+        Returns:
+            object: The retrieved object.
+        """
+        key = "{}.{}".format(cls.__name__, id)
+        return self.__objects.get(key, None)
