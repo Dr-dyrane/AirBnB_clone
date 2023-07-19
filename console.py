@@ -21,6 +21,7 @@ Authors: Ukpono Umoren & Alexander Udeogaranya
 import cmd
 import re
 import json
+import datetime
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -109,129 +110,223 @@ class HBNBCommand(cmd.Cmd):
     def do_show(self, arg):
         """
         Show the string representation of an instance.
-        Usage: show <class_name> <instance_id>
+        Usage: show <class_name> <instance_id> or <class_name>.show(<instance_id>)
         Example:
             (hbnb) show User 1234-1234-1234
+            (hbnb) User.show("1234-1234-1234")
         """
-        args = arg.split()
-        if len(args) == 0:
-            print("** class name missing **")
-            return
-        if args[0] not in self.classes:
-            print("** class doesn't exist **")
-            return
-        if len(args) == 1:
-            print("** instance id missing **")
-            return
-        instance_id = args[1]
-        instance = storage.get(self.classes[args[0]], instance_id)
-        if instance is None:
-            print("** no instance found **")
-            return
-        print(instance)
+        args = arg.split(".")
+        if len(args) > 1:
+            class_name = args[0]
+            method = args[1]
+            if class_name not in self.classes:
+                print("** class doesn't exist **")
+                return
+            if method != "show":
+                print("** unknown method **")
+                return
+            instance_id = args[2].strip('()')
+            instance = storage.get(self.classes[class_name], instance_id)
+            if instance is None:
+                print("** no instance found **")
+            else:
+                print(instance)
+        else:
+            args = arg.split()
+            if len(args) == 0:
+                print("** class name missing **")
+                return
+            if args[0] not in self.classes:
+                print("** class doesn't exist **")
+                return
+            if len(args) == 1:
+                print("** instance id missing **")
+                return
+            instance_id = args[1]
+            instance = storage.get(self.classes[args[0]], instance_id)
+            if instance is None:
+                print("** no instance found **")
+                return
+            print(instance)
 
     def do_destroy(self, arg):
         """
         Delete an instance.
-        Usage: destroy <class_name> <instance_id>
+        Usage: destroy <class_name> <instance_id> or <class_name>.destroy(<instance_id>)
         Example:
             (hbnb) destroy User 1234-1234-1234
+            (hbnb) User.destroy("1234-1234-1234")
         """
-        args = arg.split()
-        if len(args) == 0:
-            print("** class name missing **")
-            return
-        if args[0] not in self.classes:
-            print("** class doesn't exist **")
-            return
-        if len(args) == 1:
-            print("** instance id missing **")
-            return
-        instance_id = args[1]
-        instance = storage.get(self.classes[args[0]], instance_id)
-        if instance is None:
-            print("** no instance found **")
-            return
-        storage.delete(instance)
-        storage.save()
+        args = arg.split(".")
+        if len(args) > 1:
+            class_name = args[0]
+            method = args[1]
+            if class_name not in self.classes:
+                print("** class doesn't exist **")
+                return
+            if method != "destroy":
+                print("** unknown method **")
+                return
+            instance_id = args[2].strip('()')
+            instance = storage.get(self.classes[class_name], instance_id)
+            if instance is None:
+                print("** no instance found **")
+            else:
+                storage.delete(instance)
+                storage.save()
+        else:
+            args = arg.split()
+            if len(args) == 0:
+                print("** class name missing **")
+                return
+            if args[0] not in self.classes:
+                print("** class doesn't exist **")
+                return
+            if len(args) == 1:
+                print("** instance id missing **")
+                return
+            instance_id = args[1]
+            instance = storage.get(self.classes[args[0]], instance_id)
+            if instance is None:
+                print("** no instance found **")
+                return
+            storage.delete(instance)
+            storage.save()
 
     def do_all(self, arg):
         """
         Retrieve all instances or instances of a specific class.
-        Usage: all [class_name]
+        Usage: all [class_name] or <class_name>.all()
         Example:
             (hbnb) all
             (hbnb) all User
+            (hbnb) User.all()
         """
-        args = arg.split()
-        if len(args) > 0 and args[0] not in self.classes:
-            print("** class doesn't exist **")
-        else:
+        args = arg.split(".")
+        if len(args) > 1:
+            class_name = args[0]
+            method = args[1]
+            if class_name not in self.classes:
+                print("** class doesn't exist **")
+                return
+            if method != "all":
+                print("** unknown method **")
+                return
             obj_list = []
-            objects = storage.all()
+            objects = storage.all(self.classes[class_name])
             for obj in objects.values():
-                if len(args) > 0 and args[0] == obj.__class__.__name__:
-                    obj_list.append(str(obj))
-                elif len(args) == 0:
-                    obj_list.append(str(obj))
+                obj_list.append(str(obj))
             print(obj_list)
+        else:
+            if len(args) > 0 and args[0] not in self.classes:
+                print("** class doesn't exist **")
+            else:
+                obj_list = []
+                objects = storage.all()
+                for obj in objects.values():
+                    if len(args) > 0 and args[0] == obj.__class__.__name__:
+                        obj_list.append(str(obj))
+                    elif len(args) == 0:
+                        obj_list.append(str(obj))
+                print(obj_list)
 
     def do_count(self, arg):
         """
         Count the number of instances of a class.
-        Usage: count <class_name>
+        Usage: count <class_name> or <class_name>.count()
         Example:
             (hbnb) count User
+            (hbnb) User.count()
         """
-        args = arg.split()
-        if len(args) == 0:
-            print("** class name missing **")
-            return
-        if args[0] not in self.classes:
-            print("** class doesn't exist **")
-            return
-        count = storage.count(self.classes[args[0]])
-        print(count)
+        args = arg.split(".")
+        if len(args) > 1:
+            class_name = args[0]
+            method = args[1]
+            if class_name not in self.classes:
+                print("** class doesn't exist **")
+                return
+            if method != "count":
+                print("** unknown method **")
+                return
+            count = storage.count(self.classes[class_name])
+            print(count)
+        else:
+            if len(args) > 0 and args[0] not in self.classes:
+                print("** class doesn't exist **")
+            else:
+                count = storage.count(self.classes[args[0]])
+                print(count)
 
     def do_update(self, arg):
         """
         Update an instance with new attribute values.
-        Usage:
-        update <class_name> <instance_id> <attribute_name> "<attribute_value>"
-        update <class_name> <instance_id> <dictionary>
+        Usage: update <class_name> <instance_id> <attribute_name> <attribute_value> or
+            update <class_name> <instance_id> <dictionary representation> or
+            <class_name>.update(<instance_id>, <dictionary representation>)
         Example:
-        (hbnb) update User 1234-1234-1234 first_name "John"
-        (hbnb) update User 1234-1234-1234 {"age": 30, "city": "San Francisco"}
+            (hbnb) update User 1234-1234-1234 first_name "John"
+            (hbnb) update User 1234-1234-1234 {"age": 30, "city": "San Francisco"}
+            (hbnb) User.update("1234-1234-1234", {"age": 30, "city": "San Francisco"})
         """
-        ags = arg.split(maxsplit=3)
-        if len(ags) == 0:
-            print("** class name missing **")
-            return
-        if ags[0] not in self.classes:
-            print("** class doesn't exist **")
-            return
-        if len(ags) == 1:
-            print("** instance id missing **")
-            return
-        instance_id = ags[1]
-        instance = storage.get(self.classes[ags[0]], instance_id)
-        if instance is None:
-            print("** no instance found **")
-            return
-        if len(ags) == 2 and ags[2].startswith("{") and ags[2].endswith("}"):
+        args = arg.split(".")
+        if len(args) > 1:
+            class_name = args[0]
+            method = args[1]
+            if class_name not in self.classes:
+                print("** class doesn't exist **")
+                return
+            if method != "update":
+                print("** unknown method **")
+                return
+            update_args = args[2].strip('()')
+            update_args = re.split(",\s*(?![^{}]*\})", update_args)
+            instance_id = update_args[0].strip('\"\'')
+            instance = storage.get(self.classes[class_name], instance_id)
+            if instance is None:
+                print("** no instance found **")
+                return
+            if len(update_args) < 2:
+                print("** attribute dictionary missing **")
+                return
             try:
-                attributes = json.loads(ags[2].replace("'", "\""))
+                attribute_dict = json.loads(update_args[1].replace("'", "\""))
             except json.JSONDecodeError:
                 print("** invalid dictionary syntax **")
                 return
-            for attr, value in attributes.items():
+            for attr, value in attribute_dict.items():
                 setattr(instance, attr, value)
-        elif len(ags) == 4:
-            setattr(instance, ags[2], ags[3].strip("\""))
+            setattr(instance, "updated_at", datetime.now())
+            storage.save()
         else:
-            print("** invalid syntax **")
-            return
-        storage.save()
+            ags = arg.split(maxsplit=3)
+            if len(ags) == 0:
+                print("** class name missing **")
+                return
+            if ags[0] not in self.classes:
+                print("** class doesn't exist **")
+                return
+            if len(ags) == 1:
+                print("** instance id missing **")
+                return
+            instance_id = ags[1]
+            instance = storage.get(self.classes[ags[0]], instance_id)
+            if instance is None:
+                print("** no instance found **")
+                return
+            if len(ags) == 2 and ags[2].startswith("{") and ags[2].endswith("}"):
+                try:
+                    attributes = json.loads(ags[2].replace("'", "\""))
+                except json.JSONDecodeError:
+                    print("** invalid dictionary syntax **")
+                    return
+                for attr, value in attributes.items():
+                    setattr(instance, attr, value)
+            elif len(ags) == 4:
+                setattr(instance, ags[2], ags[3].strip("\""))
+            else:
+                print("** invalid syntax **")
+                return
+            storage.save()
 
     # Helper function to parse attribute values
 
