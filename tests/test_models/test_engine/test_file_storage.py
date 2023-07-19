@@ -6,6 +6,7 @@ Authors: Ukpono Umoren & Alexander Udeogaranya
 """
 
 import unittest
+import os
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -149,6 +150,78 @@ class TestFileStorage(unittest.TestCase):
         self.assertIn("place_id", review_attributes)
         self.assertIn("user_id", review_attributes)
         self.assertIn("text", review_attributes)
+
+    def test_delete(self):
+        """
+        Test the delete() method of FileStorage.
+
+        Deletes the given object from __objects.
+        """
+        self.storage.new(self.base_model)
+        key = "{}.{}".format(
+            type(self.base_model).__name__, self.base_model.id)
+
+        # Test deleting an existing object
+        self.assertIn(key, self.storage.all())
+        self.storage.delete(self.base_model)
+        self.assertNotIn(key, self.storage.all())
+
+        # Test deleting a non-existing object
+        self.storage.delete(self.base_model)  # No exception should be raised
+
+    def test_count(self):
+        """
+        Test the count() method of FileStorage.
+
+        Returns the number of objects in storage.
+        """
+        self.storage.new(self.base_model)
+        self.storage.new(self.user)
+        self.storage.new(self.user)
+        self.storage.new(self.state)
+
+        # Test counting all objects
+        self.assertEqual(self.storage.count(), 4)
+
+        # Test counting objects of a specific class
+        self.assertEqual(self.storage.count(User), 2)
+        self.assertEqual(self.storage.count(State), 1)
+        self.assertEqual(self.storage.count(City), 0)
+
+    def test_get(self):
+        """
+        Test the get() method of FileStorage.
+
+        Retrieves an object by class and ID.
+        """
+        self.storage.new(self.base_model)
+        self.storage.new(self.user)
+        self.storage.new(self.state)
+
+        # Test retrieving an existing object
+        retrieved_base_model = self.storage.get(BaseModel, self.base_model.id)
+        self.assertEqual(retrieved_base_model, self.base_model)
+
+        # Test retrieving a non-existing object
+        non_existing_obj = self.storage.get(User, "non-existing-id")
+        self.assertIsNone(non_existing_obj)
+
+    def test_reload_no_file(self):
+        """
+        Test the reload() method of FileStorage when the file does not exist.
+        """
+        # Delete the file before calling reload()
+        os.remove(self.storage._FileStorage__file_path)
+        self.storage.reload()  # No exception should be raised
+
+    def test_reload_empty_file(self):
+        """
+        Test the reload() method of FileStorage when the file is empty.
+        """
+        # Create an empty file before calling reload()
+        with open(self.storage._FileStorage__file_path, "w") as f:
+            f.write("")
+        self.storage.reload()  # No exception should be raised
 
 
 if __name__ == "__main__":

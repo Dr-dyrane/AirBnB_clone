@@ -204,3 +204,34 @@ class FileStorage:
         """
         key = "{}.{}".format(cls.__name__, id)
         return self.__objects.get(key, None)
+
+    def delete(self, obj):
+        """
+        Deletes the given object from __objects.
+
+        Args:
+            obj: The object to delete.
+        """
+        key = "{}.{}".format(type(obj).__name__, obj.id)
+        if key in self.__objects:
+            del self.__objects[key]
+
+    def count(self, cls=None):
+        """
+        Returns the number of objects in storage.
+
+        Args:
+            cls (class, optional): The class of objects to count.
+                If None, counts all objects.
+
+        Returns:
+            int: The number of objects.
+        """
+        if cls is None:
+            return len(self.__objects)
+        else:
+            count = 0
+            for value in self.__objects.values():
+                if isinstance(value, cls):
+                    count += 1
+            return count
