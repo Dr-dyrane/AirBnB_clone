@@ -56,7 +56,7 @@ class TestBaseModel(unittest.TestCase):
         Test the save() method of the BaseModel class.
         """
         old_updated_at = self.base_model.updated_at
-        self.assertEqual(self.base_model.save(), None)  # Modified line
+        self.assertEqual(self.base_model.save(), None)
         new_updated_at = self.base_model.updated_at
         self.assertNotEqual(old_updated_at, new_updated_at)
 
