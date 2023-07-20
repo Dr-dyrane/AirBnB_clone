@@ -1,0 +1,20 @@
+/* File: styles/4-common.css */
+/* Description: Global styles for the body and .container */
+/* Authors: Ukpono Umoren & Alexander Udeogaranya */
+
+/* Global styles for the body */
+body {
+  margin: 0;
+  padding: 0;
+  /* Set font family */
+  font-family: Circular, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #484848; /* Set font color */
+  font-size: 14px; /* Set font size */
+}
+
+/* Styles for the container */
+.container {
+  max-width: 1000px; /* Set the maximum width of the container */
+  margin: 30px auto; /* Center the container horizontally with 30px 
+  margin on top and bottom */
+}

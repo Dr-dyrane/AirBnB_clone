@@ -1,0 +1,13 @@
+/* File: styles/2-header.css
+   Description: This file contains styles for the header section.
+   It defines the appearance of the header element, including background color,
+   height, and width.
+   Authors: Ukpono Umoren & Alexander Udeogaranya
+*/
+
+/* Header styles */
+header {
+  background-color: #ff0000; /* Red background color */
+  height: 70px; /* Set the height of the header */
+  width: 100%; /* Set the width to occupy the full width of the page */
+}

@@ -1,0 +1,10 @@
+/* File: styles/2-common.css
+   Description: This file contains global styles for the entire page.
+   Authors: Ukpono Umoren & Alexander Udeogaranya
+*/
+
+/* Global styles */
+body {
+  margin: 0;
+  padding: 0;
+}

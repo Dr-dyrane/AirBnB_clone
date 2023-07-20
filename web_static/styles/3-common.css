@@ -1,0 +1,15 @@
+/* File: styles/3-common.css
+   Description: This file contains global styles for the entire page.
+   It sets the common styles for the body, such as font color, size, & family.
+   Authors: Ukpono Umoren & Alexander Udeogaranya
+*/
+
+/* Global styles */
+body {
+  margin: 0;
+  padding: 0;
+  color: #484848; /* Font color */
+  font-size: 14px; /* Font size */
+  /* Font family */
+  font-family: Circular, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}

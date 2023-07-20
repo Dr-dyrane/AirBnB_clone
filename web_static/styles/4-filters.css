@@ -1,0 +1,34 @@
+/* File: styles/4-filters.css */
+/* Description: Styles for the filters box and search button */
+/* Authors: Ukpono Umoren & Alexander Udeogaranya */
+
+/* Styles for the filters box */
+.filters {
+  background-color: white; /* Set background color to white */
+  height: 70px; /* Set the height of the filters box */
+  width: 100%; /* Set the width to 100% of its container */
+  border: 1px solid #dddddd; /* Set a 1px solid border with color #DDDDDD */
+  border-radius: 4px; /* Apply a border radius of 4px for rounded corners */
+}
+
+/* Styles for the search button */
+.search-button {
+  font-size: 18px; /* Set the font size of the button */
+  background-color: #ff5a5f; /* Set background color to #FF5A5F (red) */
+  color: #ffffff; /* Set font color to white */
+  height: 48px; /* Set the height of the button */
+  width: 20%; /* Set the width to 20% of the filters box */
+  border: none; /* Remove borders */
+  border-radius: 4px; /* Apply a border radius of 4px for rounded corners */
+  margin-right: 30px; /* Set right margin to 30px */
+  margin-top: 11px; /* Set top margin to 11px */
+  float: right; /* Float the button to the right */
+  opacity: 1; /* Set initial opacity to 1 */
+  /* Apply a transition effect on opacity */
+  transition: opacity 0.2s ease-in-out;
+}
+
+/* Styles for the search button on hover */
+.search-button:hover {
+  opacity: 0.9; /* Reduce opacity to 0.9 when the button is hovered */
+}

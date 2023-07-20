@@ -1,0 +1,23 @@
+/* File: styles/3-header.css
+   Description: This file contains styles for the header section.
+   It defines the appearance of the header element, including colors,
+   height, and logo positioning.
+   Authors: Ukpono Umoren & Alexander Udeogaranya
+*/
+
+/* Header styles */
+header {
+  color: white; /* Text color */
+  height: 70px; /* Set the height of the header */
+  width: 100%; /* Set the width to occupy the full width of the page */
+  border-bottom: 1px solid #cccccc; /* Add a bottom border */
+  display: flex; /* Use flex display to align logo vertically */
+  align-items: center; /* Vertically center the logo */
+  padding-left: 20px; /* Add left padding for logo alignment */
+}
+
+/* Logo styles */
+img {
+  max-height: 100%; /* Ensure the logo fits within the header height */
+  margin-right: 20px; /* Add right margin for spacing between logo and text */
+}

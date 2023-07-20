@@ -1,0 +1,20 @@
+/* File: styles/2-footer.css
+   Description: This file contains styles for the footer section.
+   It defines the appearance of the footer element, including background color,
+   height, width, and positioning.
+   The footer content is centered both horizontally and vertically.
+   Authors: Ukpono Umoren & Alexander Udeogaranya
+*/
+
+/* Footer styles */
+footer {
+  text-align: center; /* Center align the content */
+  background-color: #00ff00; /* Green background color */
+  height: 60px; /* Set the height of the footer */
+  width: 100%; /* Set the width to occupy the full width of the page */
+  position: absolute; /* Position the footer absolutely */
+  bottom: 0; /* Position the footer at the bottom of the page */
+  display: flex; /* Use flex display to center the content */
+  justify-content: center; /* Horizontally center the content */
+  align-items: center; /* Vertically center the content */
+}
