@@ -7,13 +7,14 @@
 
 /* Footer styles */
 footer {
-  color: black; /* Text color */
+  background-color: white; /* Set the background color to white */
   height: 60px; /* Set the height of the footer */
   width: 100%; /* Set the width to occupy the full width of the page */
   border-top: 1px solid #cccccc; /* Add a top border */
-  position: absolute; /* Position the footer absolutely */
+  position: relative; /* Position the footer relative */
   bottom: 0; /* Position the footer at the bottom of the page */
   display: flex; /* Use flex display to center the content */
   justify-content: center; /* Horizontally center the content */
   align-items: center; /* Vertically center the content */
+  text-align: center; /* Align the text to the middle*/
 }

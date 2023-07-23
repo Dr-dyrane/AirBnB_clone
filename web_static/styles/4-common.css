@@ -18,3 +18,8 @@ body {
   margin: 30px auto; /* Center the container horizontally with 30px 
   margin on top and bottom */
 }
+
+/*strong* font weight*/
+strong {
+  font-weight: bold;
+}

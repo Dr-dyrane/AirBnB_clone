@@ -1,0 +1,33 @@
+/* File: styles/7-places.css */
+/* Description: Styles for the places section and listings */
+/* Authors: Ukpono Umoren & Alexander Udeogaranya */
+
+/* Places style */
+.places {
+  margin-top: 20px; /* Add margin to the top for spacing */
+}
+
+/* Place listings style */
+.places article {
+  width: 390px; /* Set the width of the listing box */
+  padding: 20px; /* Add padding for spacing within the listing box */
+  margin: 20px; /* Add margin for spacing between listings */
+  border: 1px solid #ff5a5f; /* Set a 1px solid border with color #ff5a5f */
+  border-radius: 4px; /* Apply a border radius of 4px for rounded corners */
+  display: inline-block; /* Display listings inline */
+}
+
+/* Title (h1) style for the Places section */
+.places h1 {
+  font-size: 30px; /* Set font size to 30px */
+  font-weight: bold; /* Set font weight to bold */
+  width: 100%; /* Set the width of the title to 100% */
+  margin: 0.67em 0; /* Add margin for spacing within the title */
+}
+
+/* Title (h2) style for the place listings */
+.places h2 {
+  font-size: 30px; /* Set font size to 30px */
+  font-weight: bold; /* Set font weight to bold */
+  text-align: center; /* Align the title in the center horizontally */
+}

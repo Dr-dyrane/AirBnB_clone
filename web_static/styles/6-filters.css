@@ -1,5 +1,6 @@
 /* File: styles/6-filters.css */
-/* Description: Styles for the filters box and filter sections with contextual dropdown */
+/* Description: Styles for the filters box and filter sections
+with contextual dropdown */
 /* Authors: Ukpono Umoren & Alexander Udeogaranya */
 
 /* Filters style */
@@ -9,6 +10,7 @@
   width: 100%; /* Set the width to 100% of its container */
   border: 1px solid #dddddd; /* Set a 1px solid border with color #dddddd */
   border-radius: 4px; /* Apply a border radius of 4px for rounded corners */
+  display: inline-block;
 }
 
 /* Search button style */
@@ -39,13 +41,16 @@
 .amenities {
   display: inline-block; /* Display the filter sections inline */
   position: relative; /* Set the position of the filter sections to relative */
-  height: 100%; /* Set the height of the filter sections to 100% of the filters box */
-  width: 25%; /* Set the width of the filter sections to 25% of the filters box */
+  height: 100%; /* Set the height of the filter sections to 
+  100% of the filters box */
+  width: 25%; /* Set the width of the filter sections to 
+  25% of the filters box */
 }
 
 /* Locations filter */
 .locations {
-  border-right: 1px solid #dddddd; /* Set a right border of 1px with color #dddddd for separation */
+  border-right: 1px solid #dddddd; /* Set a right border of 1px with 
+  color #dddddd for separation */
 }
 
 /* Show contextual dropdown on hover */
@@ -83,7 +88,7 @@
 .filters h4 {
   font-size: 14px; /* Set font size to 14px */
   font-weight: 400; /* Set font weight to 400 (normal) */
-  height: 50%; /* Set the height of the subtitle to 50% of the filter section */
+  height: 50%; /* Set the height of the subtitle to 50% : the filter section */
   padding: 5px 0 12px 30px; /* Add padding for spacing within the subtitle */
 }
 
@@ -116,5 +121,5 @@
 
 /* Styles for list items (li) in the dropdown under Amenities */
 .filters .amenities li {
-  margin: 12px auto 12px 30px; /* Add margin for spacing within the list items */
+  margin: 12px auto 12px 30px; /* Add margin for spacing within : list items */
 }

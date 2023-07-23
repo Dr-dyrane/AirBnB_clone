@@ -1,0 +1,155 @@
+<!-- File: 8-index.html -->
+<!-- Description: HTML page displaying a header, -->
+<!-- footer,filters box with dropdown, and results -->
+<!-- Authors: Ukpono Umoren & Alexander Udeogaranya -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0" />-->
+    <title>AirBnB Clone - Home</title>
+    <!-- Link to CSS files -->
+    <link rel="stylesheet" href="styles/4-common.css" />
+    <link rel="stylesheet" href="styles/3-header.css" />
+    <link rel="stylesheet" href="styles/3-footer.css" />
+    <link rel="stylesheet" href="styles/6-filters.css" />
+    <link rel="stylesheet" href="styles/8-places.css" />
+    <link rel="icon" href="images/icon.png" />
+  </head>
+  <body>
+    <!-- Header section -->
+    <header>
+      <!-- Header content goes here (e.g., logo, navigation menu) -->
+      <!-- Logo -->
+      <img src="images/logo.png" alt="Logo" />
+    </header>
+
+    <!-- Container section -->
+    <div class="container">
+      <!-- Filters section -->
+      <section class="filters">
+        <!-- Locations filter -->
+        <div class="locations">
+          <h3>States</h3>
+          <h4>ie. State 1, State 2, State 3...</h4>
+          <!-- Locations dropdown -->
+          <div class="popover">
+            <h2>State 1</h2>
+            <ul>
+              <li>City 1</li>
+              <li>City 2</li>
+              <li>City 3</li>
+            </ul>
+            <h2>State 2</h2>
+            <ul>
+              <li>City 1</li>
+              <li>City 2</li>
+              <li>City 3</li>
+            </ul>
+          </div>
+        </div>
+        <!-- Amenities filter -->
+        <div class="amenities">
+          <h3>Amenities</h3>
+          <h4>ie. Amenity 1, Amenity 2...</h4>
+          <!-- Amenities dropdown -->
+          <div class="popover">
+            <ul>
+              <li>Amenity 1</li>
+              <li>Amenity 2</li>
+              <li>Amenity 3</li>
+              <li>Amenity 4</li>
+              <li>Amenity 5</li>
+            </ul>
+          </div>
+        </div>
+        <button class="search-button">Search</button>
+      </section>
+
+      <!-- Places section -->
+      <section class="places">
+        <h1>Places</h1>
+        <!-- Place listings -->
+        <div class="listing">
+          <article>
+            <div class="list-motel">
+              <h2>Place 1</h2>
+              <div class="price_by_night"><p>$50</p></div>
+            </div>
+            <div class="information">
+              <div class="max_guest"><p>5 Guests</p></div>
+              <div class="number_rooms"><p>4 Rooms</p></div>
+              <div class="number_bathrooms"><p>3 Bathrooms</p></div>
+            </div>
+            <div class="user">
+              <p><b>Owner:</b> John Doe</p>
+            </div>
+            <div class="description">
+              <p>Spacious and cozy place with a beautiful garden.</p>
+            </div>
+          </article>
+          <article>
+            <div class="list-motel">
+              <h2>Place 2</h2>
+              <div class="price_by_night"><p>$80</p></div>
+            </div>
+            <div class="information">
+              <div class="max_guest"><p>3 Guests</p></div>
+              <div class="number_rooms"><p>2 Rooms</p></div>
+              <div class="number_bathrooms"><p>2 Bathrooms</p></div>
+            </div>
+            <div class="user">
+              <p><b>Owner:</b> Jane Smith</p>
+            </div>
+            <div class="description">
+              <p>Modern apartment with stunning city views.</p>
+            </div>
+          </article>
+          <article>
+            <div class="list-motel">
+              <h2>Place 3</h2>
+              <div class="price_by_night"><p>$90</p></div>
+            </div>
+            <div class="information">
+              <div class="max_guest"><p>3 Guests</p></div>
+              <div class="number_rooms"><p>2 Rooms</p></div>
+              <div class="number_bathrooms"><p>2 Bathrooms</p></div>
+            </div>
+            <div class="user">
+              <p><b>Owner:</b> John Smith</p>
+            </div>
+            <div class="description">
+              <p>
+                Modern apartment with stunning city views and delivery service.
+              </p>
+            </div>
+          </article>
+          <article>
+            <div class="list-motel">
+              <h2>Place 4</h2>
+              <div class="price_by_night"><p>$90</p></div>
+            </div>
+            <div class="information">
+              <div class="max_guest"><p>3 Guests</p></div>
+              <div class="number_rooms"><p>2 Rooms</p></div>
+              <div class="number_bathrooms"><p>2 Bathrooms</p></div>
+            </div>
+            <div class="user">
+              <p><b>Owner:</b> John Smith</p>
+            </div>
+            <div class="description">
+              <p>
+                Modern apartment with stunning city views and delivery service.
+              </p>
+            </div>
+          </article>
+          <!-- Add more place articles here -->
+        </div>
+      </section>
+    </div>
+
+    <!-- Footer section -->
+    <footer>Best School</footer>
+  </body>
+</html>
