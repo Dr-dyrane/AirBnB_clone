@@ -1,0 +1,20 @@
+/* File: styles/102-footer.css */
+/* Description: Styles for the footer section */
+/* Authors: Ukpono Umoren & Alexander Udeogaranya */
+
+/*
+ * === Footer style ===
+ */
+/* Footer style */
+footer {
+  border-top: 1px solid #cccccc;
+  text-align: center;
+  background-color: #ffffff;
+  height: 60px;
+  width: 100%;
+  bottom: 0;
+  justify-content: center;
+  position: relative;
+  align-items: center;
+  display: flex;
+}
