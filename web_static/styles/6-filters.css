@@ -1,125 +1,138 @@
 /* File: styles/6-filters.css */
-/* Description: Styles for the filters box and filter sections
-with contextual dropdown */
+/* Description: Styles for the filters box and filter sections with contextual dropdown */
 /* Authors: Ukpono Umoren & Alexander Udeogaranya */
 
-/* Filters style */
+/*
+ * === Filters box style ===
+ */
+
+/* Define styles for the filters box container */
 .filters {
-  background-color: #ffffff; /* Set background color to white */
-  height: 70px; /* Set the height of the filters box */
-  width: 100%; /* Set the width to 100% of its container */
-  border: 1px solid #dddddd; /* Set a 1px solid border with color #dddddd */
-  border-radius: 4px; /* Apply a border radius of 4px for rounded corners */
-  display: inline-block;
+  background-color: #ffffff; /* White background */
+  height: 70px; /* Set height to 70px */
+  width: 100%; /* Full width */
+  border: 1px solid #dddddd; /* 1px gray border */
+  border-radius: 4px; /* Rounded corners */
+  display: inline-block; /* Display filters side by side */
 }
 
-/* Search button style */
+/* Define styles for the search button */
 .filters button {
-  font-size: 18px; /* Set font size to 18px */
-  background-color: #ff5a5f; /* Set background color to #ff5a5f */
-  height: 48px; /* Set the height of the button to 48px */
-  width: 20%; /* Set the width of the button to 20% of the filters box */
-  border-radius: 4px; /* Apply a border radius of 4px for rounded corners */
-  border: none; /* Remove the button border */
-  color: #ffffff; /* Set text color to white */
-  float: right; /* Float the button to the right */
-  margin: 12px 30px; /* Add margin to the button for spacing */
+  font-size: 18px; /* Font size 18px */
+  background-color: #ff5a5f; /* Red background */
+  height: 48px; /* Height of 48px */
+  width: 20%; /* 20% width */
+  border-radius: 4px; /* Rounded corners */
+  border: none; /* No border */
+  color: #ffffff; /* White text color */
+  float: right; /* Float button to the right */
+  margin: 12px 30px; /* Set top and bottom margin to 12px, left and right margin to 30px */
 }
 
-/* Change opacity to 90% when the mouse is on the button */
+/* Apply opacity to 90% when the mouse is on the button */
 .filters button:hover {
   background-color: rgba(
     255,
     90,
     95,
     0.9
-  ); /* Set background color with 90% opacity when hovered */
+  ); /* Red background with 90% opacity */
 }
 
-/* Locations and Amenities filter sections */
-.locations,
-.amenities {
-  display: inline-block; /* Display the filter sections inline */
-  position: relative; /* Set the position of the filter sections to relative */
-  height: 100%; /* Set the height of the filter sections to 
-  100% of the filters box */
-  width: 25%; /* Set the width of the filter sections to 
-  25% of the filters box */
+/*
+   * === Locations and Amenities section ===
+   */
+
+/* Display locations and amenities side by side */
+.filters .locations,
+.filters .amenities {
+  display: inline-block;
+  position: relative; /* Set position to relative for positioning the dropdown menu */
+  height: 100%; /* Set height to 100% of the parent container */
+  width: 25%; /* Set width to 25% of the parent container */
 }
 
-/* Locations filter */
-.locations {
-  border-right: 1px solid #dddddd; /* Set a right border of 1px with 
-  color #dddddd for separation */
+/* Add a right border to separate locations and amenities */
+.filters .locations {
+  border-right: 1px solid #dddddd;
 }
 
-/* Show contextual dropdown on hover */
+/* Change background color on hover for locations and amenities */
+.filters .locations:hover,
+.filters .amenities:hover {
+  background-color: #fafafa; /* Light gray background on hover */
+}
+
+/* Define styles for the popover menu containing locations and amenities */
+.filters .popover {
+  background-color: #fafafa; /* Light gray background */
+  border: 1px solid #dddddd; /* 1px gray border */
+  border-radius: 4px; /* Rounded corners */
+  display: none; /* Hide the popover menu by default */
+  position: absolute; /* Set the popover position to absolute */
+  width: 100%; /* Set width to 100% of the parent container */
+}
+
+/* Display the popover menu on hover */
 .filters .locations:hover .popover,
 .filters .amenities:hover .popover {
-  display: block; /* Show the dropdown when the filter section is hovered */
+  display: block;
 }
 
-/* Styles for filter titles (h2), h3, and subtitles (h4) */
+/* Define styles for the lists inside the popover menu */
+.filters .locations ul {
+  padding: 6px 0 6px 0; /* Add padding to the lists */
+  list-style-type: none; /* Remove the list-style (bullet points) */
+}
+
+/* Remove list-style for the amenities */
+.filters .amenities ul {
+  list-style-type: none;
+}
+
+/* Add margin to the location list items */
+.filters .locations li {
+  margin: 0 auto 12px 3em; /* Set margin for the list items */
+}
+
+/* Add margin to the amenities list items */
+.filters .amenities li {
+  margin: 12px auto 12px 30px; /* Set margin for the list items */
+}
+
+/*
+   * === Places header ===
+   */
+
+/* Set box-sizing for h2, h3, and h4 tags to border-box */
 .filters h2,
 .filters h3,
 .filters h4 {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
-  margin: 0;
+  margin: 0; /* Remove margin */
 }
 
-/* Styles for filter titles (h2) */
+/* Define styles for the h2 tag */
 .filters h2 {
   font-size: 16px; /* Set font size to 16px */
   font-weight: bold; /* Set font weight to bold */
-  margin: 12px auto 0 30px; /* Add margin for spacing within the title */
+  margin: 12px auto 0 30px; /* Set margins */
 }
 
-/* Styles for filter titles (h3) */
+/* Define styles for the h3 tag */
 .filters h3 {
   font-size: 1.17em; /* Set font size to 1.17em */
-  font-weight: 600; /* Set font weight to 600 (bold) */
-  height: 50%; /* Set the height of the title to 50% of the filter section */
-  padding: 15.5px 0 0 30px; /* Add padding for spacing within the title */
+  font-weight: 600; /* Set font weight to 600 */
+  height: 50%; /* Set height to 50% */
+  padding: 15.5px 0 0 30px; /* Set padding */
 }
 
-/* Styles for filter subtitles (h4) */
+/* Define styles for the h4 tag */
 .filters h4 {
   font-size: 14px; /* Set font size to 14px */
-  font-weight: 400; /* Set font weight to 400 (normal) */
-  height: 50%; /* Set the height of the subtitle to 50% : the filter section */
-  padding: 5px 0 12px 30px; /* Add padding for spacing within the subtitle */
-}
-
-/* Locations and Amenities popover menu */
-.filters .popover {
-  background-color: #fafafa; /* Set background color to #fafafa */
-  border: 1px solid #dddddd; /* Set a 1px solid border with color #dddddd */
-  border-radius: 4px; /* Apply a border radius of 4px for rounded corners */
-  display: none; /* Hide the dropdown by default */
-  position: absolute; /* Set the position of the dropdown to absolute */
-  width: 100%; /* Set the width of the dropdown to 100% */
-}
-
-/* Styles for list items (li) in the dropdown */
-.filters ul {
-  list-style-type: none; /* Remove list-style */
-  padding: 6px 0; /* Add padding for spacing within the list items */
-}
-
-/* Styles for list items (li) in the dropdown under Locations */
-.filters .locations ul {
-  padding: 6px 0 6px 0; /* Add padding for spacing within the list items */
-  list-style-type: none; /* Remove list-style */
-}
-
-/* Styles for list items (li) in the dropdown under Locations */
-.filters .locations li {
-  margin: 0 auto 12px 3em; /* Add margin for spacing within the list items */
-}
-
-/* Styles for list items (li) in the dropdown under Amenities */
-.filters .amenities li {
-  margin: 12px auto 12px 30px; /* Add margin for spacing within : list items */
+  font-weight: 400; /* Set font weight to 400 */
+  height: 50%; /* Set height to 50% */
+  padding: 5px 0 12px 30px; /* Set padding */
 }
