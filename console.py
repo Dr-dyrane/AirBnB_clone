@@ -203,14 +203,10 @@ class HBNBCommand(cmd.Cmd):
             (hbnb) User.all()
         """
         args = arg.split(".")
-        if len(args) > 1:
+        if len(args) > 1 and args[1] == "all()":
             class_name = args[0]
-            method = args[1]
             if class_name not in self.classes:
                 print("** class doesn't exist **")
-                return
-            if method != "all":
-                print("** unknown method **")
                 return
             obj_list = []
             objects = storage.all(self.classes[class_name])
