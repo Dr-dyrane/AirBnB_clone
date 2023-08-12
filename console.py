@@ -68,7 +68,118 @@ class HBNBCommand(cmd.Cmd):
         Args:
             line (str): The entered command line.
         """
-        print("*** Unknown syntax: {}".format(line))
+        match = re.search(r"^(\w+)\.(\w+)\((.*)\)$", line)
+        if match:
+            class_name = match.group(1)
+            method = match.group(2)
+            method_args = match.group(3)
+            self.handle_method(class_name, method, method_args)
+        else:
+            print("*** Unknown syntax: {}".format(line))
+
+    def handle_method(self, class_name, method, method_args):
+        """
+        Handle method calls in the format <class_name>.<method>(<method_args>).
+        Args:
+            class_name (str): The name of the class.
+            method (str): The name of the method.
+            method_args (str): The arguments of the method.
+        """
+        if class_name not in self.classes:
+            print("** class doesn't exist **")
+            return
+
+        if method == "all":
+            self.handle_all(class_name)
+        elif method == "count":
+            self.handle_count(class_name)
+        elif method == "show":
+            instance_id = method_args.strip('\"\'')
+            self.handle_show(class_name, instance_id)
+        elif method == "destroy":
+            instance_id = method_args.strip('\"\'')
+            self.handle_destroy(class_name, instance_id)
+        elif method == "update":
+            self.handle_update(class_name, method_args)
+        else:
+            print("** unknown method **")
+
+    def handle_all(self, class_name):
+        """
+        Handle the "all" method to retrieve instances.
+        Args:
+            class_name (str): The name of the class.
+        """
+        obj_list = []
+        objects = storage.all(self.classes[class_name])
+        for obj in objects.values():
+            obj_list.append(str(obj))
+        print(obj_list)
+
+    def handle_count(self, class_name):
+        """
+        Handle the "count" method to count instances.
+        Args:
+            class_name (str): The name of the class.
+        """
+        count = storage.count(self.classes[class_name])
+        print(count)
+
+    def handle_show(self, class_name, instance_id):
+        """
+        Handle the "show" method to retrieve an instance based on its ID.
+        Args:
+            class_name (str): The name of the class.
+            instance_id (str): The ID of the instance.
+        """
+        instance = storage.get(self.classes[class_name], instance_id)
+        if instance is None:
+            print("** no instance found **")
+        else:
+            print(instance)
+
+    def handle_destroy(self, class_name, instance_id):
+        """
+        Handle the "destroy" method to delete an instance based on its ID.
+        Args:
+            class_name (str): The name of the class.
+            instance_id (str): The ID of the instance.
+        """
+        instance = storage.get(self.classes[class_name], instance_id)
+        if instance is None:
+            print("** no instance found **")
+        else:
+            storage.delete(instance)
+            storage.save()
+
+    def handle_update(self, class_name, update_args):
+        """
+        Handle the "update" method to update an instance's attributes.
+        Args:
+            class_name (str): The name of the class.
+            update_args (str): The update arguments as a string.
+        """
+        try:
+            attribute_dict = json.loads(update_args.replace("'", "\""))
+        except json.JSONDecodeError:
+            print("** invalid dictionary syntax **")
+            return
+
+        instance_id = attribute_dict.get("id", None)
+        if instance_id is None:
+            print("** instance id missing **")
+            return
+
+        instance = storage.get(self.classes[class_name], instance_id)
+        if instance is None:
+            print("** no instance found **")
+            return
+
+        for attr, value in attribute_dict.items():
+            if attr != "id":
+                setattr(instance, attr, value)
+        setattr(instance, "updated_at", datetime.now())
+        storage.save()
 
     def do_quit(self, arg):
         """
