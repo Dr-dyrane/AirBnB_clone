@@ -32,14 +32,19 @@ from models.review import Review
 from models import storage
 
 
+def parse(arg):
+    """Parse the command argument into a list of tokens."""
+    tokens = re.findall(r'".+?"|\S+', arg)
+    return [token.strip('"') for token in tokens]
+
+
 class HBNBCommand(cmd.Cmd):
     """
     The HBnB command-line interpreter.
     The HBNBCommand class represents the command-line interpreter for
     the HolbertonBnB application.
     It inherits from the cmd.Cmd class provided by the cmd module,
-    which provides a framework for
-    creating command-line interpreters.
+    which provides a framework for creating command-line interpreters.
     Attributes:
         prompt (str): The command prompt.
         classes (dict): A dictionary of available model classes.
@@ -57,9 +62,7 @@ class HBNBCommand(cmd.Cmd):
     }
 
     def emptyline(self):
-        """
-        Called when an empty line is entered. Does nothing.
-        """
+        """Called when an empty line is entered. Does nothing."""
         pass
 
     def default(self, line):
@@ -92,8 +95,8 @@ class HBNBCommand(cmd.Cmd):
         Example:
             (hbnb) create User
         """
-        args = arg.split()
-        if len(args) == 0:
+        args = parse(arg)
+        if not args:
             print("** class name missing **")
             return
 
@@ -115,7 +118,7 @@ class HBNBCommand(cmd.Cmd):
             (hbnb) show User 1234-1234-1234
             (hbnb) User.show("1234-1234-1234")
         """
-        args = arg.split(".")
+        args = parse(arg)
         if len(args) > 1:
             class_name = args[0]
             method = args[1]
@@ -132,8 +135,8 @@ class HBNBCommand(cmd.Cmd):
             else:
                 print(instance)
         else:
-            args = arg.split()
-            if len(args) == 0:
+            args = parse(arg)
+            if not args:
                 print("** class name missing **")
                 return
             if args[0] not in self.classes:
@@ -157,7 +160,7 @@ class HBNBCommand(cmd.Cmd):
             (hbnb) destroy User 1234-1234-1234
             (hbnb) User.destroy("1234-1234-1234")
         """
-        args = arg.split(".")
+        args = parse(arg)
         if len(args) > 1:
             class_name = args[0]
             method = args[1]
@@ -175,8 +178,8 @@ class HBNBCommand(cmd.Cmd):
                 storage.delete(instance)
                 storage.save()
         else:
-            args = arg.split()
-            if len(args) == 0:
+            args = parse(arg)
+            if not args:
                 print("** class name missing **")
                 return
             if args[0] not in self.classes:
@@ -202,7 +205,7 @@ class HBNBCommand(cmd.Cmd):
             (hbnb) all User
             (hbnb) User.all()
         """
-        args = arg.split(".")
+        args = parse(arg)
         if len(args) > 1 and args[1] == "all()":
             class_name = args[0]
             if class_name not in self.classes:
@@ -222,7 +225,7 @@ class HBNBCommand(cmd.Cmd):
                 for obj in objects.values():
                     if len(args) > 0 and args[0] == obj.__class__.__name__:
                         obj_list.append(str(obj))
-                    elif len(args) == 0:
+                    elif not args:
                         obj_list.append(str(obj))
                 print(obj_list)
 
@@ -234,7 +237,7 @@ class HBNBCommand(cmd.Cmd):
             (hbnb) count User
             (hbnb) User.count()
         """
-        args = arg.split(".")
+        args = parse(arg)
         if len(args) > 1:
             class_name = args[0]
             method = args[1]
@@ -264,7 +267,7 @@ class HBNBCommand(cmd.Cmd):
             (hbnb) update User 1234-1234-1234 {"age": 30, "city": "San Francisco"}
             (hbnb) User.update("1234-1234-1234", {"age": 30, "city": "San Francisco"})
         """
-        args = arg.split(".")
+        args = parse(arg)
         if len(args) > 1:
             class_name = args[0]
             method = args[1]
@@ -294,8 +297,8 @@ class HBNBCommand(cmd.Cmd):
             setattr(instance, "updated_at", datetime.now())
             storage.save()
         else:
-            ags = arg.split(maxsplit=3)
-            if len(ags) == 0:
+            ags = args
+            if not ags:
                 print("** class name missing **")
                 return
             if ags[0] not in self.classes:
@@ -324,10 +327,7 @@ class HBNBCommand(cmd.Cmd):
                 return
             storage.save()
 
-    # Helper function to parse attribute values
-
-    @staticmethod
-    def parse_attribute_value(value):
+    def parse_attribute_value(self, value):
         """
         Parse the attribute value and convert it to the appropriate data type.
         Args:
@@ -343,6 +343,6 @@ class HBNBCommand(cmd.Cmd):
         return parsed_value
 
 
-# Run the console
+# run the console
 if __name__ == "__main__":
     HBNBCommand().cmdloop()
