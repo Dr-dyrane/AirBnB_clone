@@ -175,7 +175,7 @@ class HBNBCommand(cmd.Cmd):
         instance_id, attribute_data = update_args
         attribute_data = attribute_data.strip()
 
-        if not attribute_data.startswith("{") or not attribute_data.endswith("}"):
+        if not attribute_data.startswith("{") and attribute_data.endswith("}"):
             print("** invalid dictionary syntax **")
             return
 
@@ -252,7 +252,7 @@ class HBNBCommand(cmd.Cmd):
     def do_show(self, arg):
         """
         Show the string representation of an instance.
-        Usage: show <class_name> <instance_id> or <class_name>.show(<instance_id>)
+        Usage: show <class_name> <instance_id> <class_name>.show(<instance_id>)
         Example:
             (hbnb) show User 1234-1234-1234
             (hbnb) User.show("1234-1234-1234")
@@ -294,7 +294,8 @@ class HBNBCommand(cmd.Cmd):
     def do_destroy(self, arg):
         """
         Delete an instance.
-        Usage: destroy <class_name> <instance_id> or <class_name>.destroy(<instance_id>)
+        Usage: destroy <class_name> <instance_id>
+        <class_name>.destroy(<instance_id>)
         Example:
             (hbnb) destroy User 1234-1234-1234
             (hbnb) User.destroy("1234-1234-1234")
@@ -402,13 +403,16 @@ class HBNBCommand(cmd.Cmd):
     def do_update(self, arg):
         """
         Update an instance with new attribute values.
-        Usage: update <class_name> <instance_id> <attribute_name> <attribute_value> or
+        Usage: update <class_name> <instance_id> <attribute_name>
+            <attribute_value> or
             update <class_name> <instance_id> <dictionary representation> or
             <class_name>.update(<instance_id>, <dictionary representation>)
         Example:
             (hbnb) update User 1234-1234-1234 first_name "John"
-            (hbnb) update User 1234-1234-1234 {"age": 30, "city": "San Francisco"}
-            (hbnb) User.update("1234-1234-1234", {"age": 30, "city": "San Francisco"})
+            (hbnb) update User 1234-1234-1234
+            {"age": 30, "city": "San Francisco"}
+            (hbnb) User.update("1234-1234-1234",
+            {"age": 30, "city": "San Francisco"})
         """
         args = arg.split(".")
         if len(args) > 1:
@@ -455,7 +459,8 @@ class HBNBCommand(cmd.Cmd):
             if instance is None:
                 print("** no instance found **")
                 return
-            if len(ags) == 2 and ags[2].startswith("{") and ags[2].endswith("}"):
+            if len(ags) == 2 and ags[2].startswith("{") and \
+                    ags[2].endswith("}"):
                 try:
                     attributes = json.loads(ags[2].replace("'", "\""))
                 except json.JSONDecodeError:
