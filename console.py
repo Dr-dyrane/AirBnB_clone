@@ -163,7 +163,7 @@ class HBNBCommand(cmd.Cmd):
             update_args (str): The update arguments as a string.
         """
         args = update_args.split(",")
-        if len(args) < 2:
+        if len(args) < 3:
             print("** missing arguments **")
             return
 
