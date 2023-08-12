@@ -434,15 +434,10 @@ class HBNBCommand(cmd.Cmd):
             if len(update_args) < 2:
                 print("** attribute dictionary missing **")
                 return
-            try:
-                attribute_dict = json.loads(update_args[1].replace("'", "\""))
-            except json.JSONDecodeError:
-                print("** invalid dictionary syntax **")
-                return
-            for attr, value in attribute_dict.items():
-                setattr(instance, attr, value)
-            setattr(instance, "updated_at", datetime.now())
-            storage.save()
+            if "{" in update_args[1] and "}" in update_args[1]:
+                self.handle_update_with_dict(class_name, update_args[1])
+            else:
+                self.handle_update(class_name, update_args[1])
         else:
             ags = arg.split(maxsplit=3)
             if len(ags) == 0:
