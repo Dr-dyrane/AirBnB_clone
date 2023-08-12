@@ -470,6 +470,55 @@ class HBNBCommand(cmd.Cmd):
                 return
             storage.save()
 
+    def do_update_basemodel(self, line):
+        """
+        Update attributes of a BaseModel instance.
+        Usage: update BaseModel <id> <attribute_name> "<attribute_value>"
+        """
+        self.handle_update("BaseModel", line)
+
+    def do_update_user(self, line):
+        """
+        Update attributes of a User instance.
+        Usage: update User <id> <attribute_name> "<attribute_value>"
+        """
+        self.handle_update("User", line)
+
+    def do_update_state(self, line):
+        """
+        Update attributes of a State instance.
+        Usage: update State <id> <attribute_name> "<attribute_value>"
+        """
+        self.handle_update("State", line)
+
+    def do_update_city(self, line):
+        """
+        Update attributes of a City instance.
+        Usage: update City <id> <attribute_name> "<attribute_value>"
+        """
+        self.handle_update("City", line)
+
+    def do_update_place(self, line):
+        """
+        Update attributes of a Place instance.
+        Usage: update Place <id> <attribute_name> "<attribute_value>"
+        """
+        self.handle_update("Place", line)
+
+    def do_update_amenity(self, line):
+        """
+        Update attributes of an Amenity instance.
+        Usage: update Amenity <id> <attribute_name> "<attribute_value>"
+        """
+        self.handle_update("Amenity", line)
+
+    def do_update_review(self, line):
+        """
+        Update attributes of a Review instance.
+        Usage: update Review <id> <attribute_name> "<attribute_value>"
+        """
+        self.handle_update("Review", line)
+
     # Helper function to parse attribute values
 
     @staticmethod
