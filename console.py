@@ -175,7 +175,8 @@ class HBNBCommand(cmd.Cmd):
         instance_id, attribute_data = update_args
         attribute_data = attribute_data.strip()
 
-        if not attribute_data.startswith("{") and attribute_data.endswith("}"):
+        if not attribute_data.startswith("{") or not \
+                attribute_data.endswith("}"):
             print("** invalid dictionary syntax **")
             return
 
