@@ -162,9 +162,39 @@ class HBNBCommand(cmd.Cmd):
         try:
             attribute_dict = json.loads(update_args.replace("'", "\""))
         except json.JSONDecodeError:
+            pass
+        else:
+            self.update_from_dictionary(class_name, attribute_dict)
+            return
+
+        update_args = update_args.split(",", 1)
+        if len(update_args) < 2:
+            print("** missing arguments **")
+            return
+
+        instance_id, attribute_data = update_args
+        attribute_data = attribute_data.strip()
+
+        if not attribute_data.startswith("{") or not attribute_data.endswith("}"):
             print("** invalid dictionary syntax **")
             return
 
+        try:
+            attribute_dict = json.loads(attribute_data)
+        except json.JSONDecodeError:
+            print("** invalid dictionary syntax **")
+            return
+
+        self.update_from_dictionary(
+            class_name, {"id": instance_id, **attribute_dict})
+
+    def update_from_dictionary(self, class_name, attribute_dict):
+        """
+        Update an instance's attributes from a dictionary.
+        Args:
+            class_name (str): The name of the class.
+            attribute_dict (dict): The dictionary containing attribute updates.
+        """
         instance_id = attribute_dict.get("id", None)
         if instance_id is None:
             print("** instance id missing **")
@@ -177,7 +207,8 @@ class HBNBCommand(cmd.Cmd):
 
         for attr, value in attribute_dict.items():
             if attr != "id":
-                setattr(instance, attr, value)
+                parsed_value = self.parse_attribute_value(value)
+                setattr(instance, attr, parsed_value)
         setattr(instance, "updated_at", datetime.now())
         storage.save()
 
