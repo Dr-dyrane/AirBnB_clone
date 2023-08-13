@@ -446,10 +446,22 @@ class HBNBCommand(cmd.Cmd):
             if len(update_args) < 2:
                 print("** attribute dictionary missing **")
                 return
-            if "{" in update_args[1] and "}" in update_args[1]:
-                self.handle_update_with_dict(class_name, update_args[1])
+            # Check for dictionary update
+            if len(update_args) == 2 and update_args[1].startswith("{") and \
+                    update_args[1].endswith("}"):
+                try:
+                    attributes = json.loads(update_args[1].replace("'", "\""))
+                except json.JSONDecodeError:
+                    print("** invalid dictionary syntax **")
+                    return
+                for attr, value in attributes.items():
+                    setattr(instance, attr, value)
+            elif len(update_args) == 4:  # Check for attribute update
+                setattr(instance, update_args[1], update_args[2].strip("\""))
             else:
-                self.handle_update(class_name, update_args[1])
+                print("** invalid syntax **")
+                return
+            storage.save()
         else:
             ags = arg.split(maxsplit=3)
             if len(ags) == 0:
@@ -478,7 +490,7 @@ class HBNBCommand(cmd.Cmd):
             elif len(ags) == 4:
                 setattr(instance, ags[2], ags[3].strip("\""))
             else:
-                print("** Value missing **")
+                print("** value missing **")
                 return
             storage.save()
 
