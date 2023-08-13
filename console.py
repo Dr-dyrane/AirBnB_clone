@@ -478,7 +478,7 @@ class HBNBCommand(cmd.Cmd):
             if instance is None:
                 print("** no instance found **")
                 return
-            if len(ags) == 2 and ags[2].startswith("{") and \
+            if len(ags) == 2 and len(ags) > 2 and ags[2].startswith("{") and \
                     ags[2].endswith("}"):
                 try:
                     attributes = json.loads(ags[2].replace("'", "\""))
