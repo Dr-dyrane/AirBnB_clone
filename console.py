@@ -426,7 +426,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** unknown method **")
                 return
             update_args = args[2].strip('()')
-            update_args = re.split(",\s*(?![^{}]*\})", update_args)
+            update_args = re.split(r",\s*(?![^{}]*\})", update_args)
             instance_id = update_args[0].strip('\"\'')
             instance = storage.get(self.classes[class_name], instance_id)
             if instance is None:
