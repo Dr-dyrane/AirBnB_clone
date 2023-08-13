@@ -488,6 +488,9 @@ class HBNBCommand(cmd.Cmd):
                     return
                 for attr, value in attributes.items():
                     setattr(instance, attr, value)
+            elif len(ags) == 2:
+                print("** attribute name missing **")
+                return
             elif len(ags) == 4:
                 setattr(instance, ags[2], ags[3].strip("\""))
             else:
