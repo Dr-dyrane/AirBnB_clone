@@ -350,29 +350,40 @@ class HBNBCommand(cmd.Cmd):
         if len(args) > 1:
             class_name = args[0]
             method = args[1]
+            if method != "all()":
+                print("** unknown method **")
+                return
+
             if class_name not in self.classes:
                 print("** class doesn't exist **")
                 return
-            if method != "all":
-                print("** unknown method **")
-                return
+
             obj_list = []
             objects = storage.all(self.classes[class_name])
             for obj in objects.values():
                 obj_list.append(str(obj))
             print(obj_list)
         else:
-            if len(args) > 0 and args[0] not in self.classes:
-                print("** class doesn't exist **")
-            else:
+            args = arg.split()
+            if len(args) == 0:
                 obj_list = []
                 objects = storage.all()
                 for obj in objects.values():
-                    if len(args) > 0 and args[0] == obj.__class__.__name__:
-                        obj_list.append(str(obj))
-                    elif len(args) == 0:
-                        obj_list.append(str(obj))
+                    obj_list.append(str(obj))
                 print(obj_list)
+            elif len(args) == 1:
+                class_name = args[0]
+                if class_name not in self.classes:
+                    print("** class doesn't exist **")
+                    return
+
+                obj_list = []
+                objects = storage.all(self.classes[class_name])
+                for obj in objects.values():
+                    obj_list.append(str(obj))
+                print(obj_list)
+            else:
+                print("** invalid syntax **")
 
     def do_count(self, arg):
         """
@@ -467,7 +478,7 @@ class HBNBCommand(cmd.Cmd):
             elif len(ags) == 4:
                 setattr(instance, ags[2], ags[3].strip("\""))
             else:
-                print("** invalid syntax **")
+                print("** Value missing **")
                 return
             storage.save()
 
