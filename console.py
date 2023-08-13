@@ -474,7 +474,7 @@ class HBNBCommand(cmd.Cmd):
                 print("** instance id missing **")
                 return
             if len(args) == 2:
-                print("** attrubute name missing **")
+                print("** attribute name missing **")
                 return
             instance_id = ags[1]
             instance = storage.get(self.classes[ags[0]], instance_id)
