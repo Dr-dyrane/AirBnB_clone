@@ -473,9 +473,6 @@ class HBNBCommand(cmd.Cmd):
             if len(ags) == 1:
                 print("** instance id missing **")
                 return
-            if len(args) == 2:
-                print("** attribute name missing **")
-                return
             instance_id = ags[1]
             instance = storage.get(self.classes[ags[0]], instance_id)
             if instance is None:
@@ -490,8 +487,11 @@ class HBNBCommand(cmd.Cmd):
                     return
                 for attr, value in attributes.items():
                     setattr(instance, attr, value)
-            elif len(ags) == 4:
+            elif len(ags) == 3:
                 setattr(instance, ags[2], ags[3].strip("\""))
+            elif len(ags) == 4:
+                print("** attribute name missing **")
+                return
             else:
                 print("** value missing **")
                 return
