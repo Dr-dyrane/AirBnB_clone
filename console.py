@@ -182,7 +182,8 @@ class HBNBCommand(cmd.Cmd):
 
     def handle_update_with_dict(self, class_name, update_args):
         """
-        Handle the "update" method to update an instance's attributes with a dictionary.
+        Handle the "update" method to update an instance's
+        attributes with a dictionary.
         Args:
             class_name (str): The name of the class.
             update_args (str): The update arguments as a string.
