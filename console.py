@@ -473,6 +473,9 @@ class HBNBCommand(cmd.Cmd):
             if len(ags) == 1:
                 print("** instance id missing **")
                 return
+            if len(args) == 2:
+                print("** attrubute name missing **")
+                return
             instance_id = ags[1]
             instance = storage.get(self.classes[ags[0]], instance_id)
             if instance is None:
